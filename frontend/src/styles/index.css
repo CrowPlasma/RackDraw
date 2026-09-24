@@ -1,0 +1,293 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Draw.io Grid Canvas Background */
+.grid-canvas {
+  background-color: var(--bg-deep);
+  background-image: 
+    linear-gradient(var(--border-glass) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-glass) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center;
+  transition: background-color 0.3s ease, background-image 0.3s ease;
+}
+
+/* Glassmorphism Panel Utility */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Inputs & Form Controls */
+.input-field {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--accent-neon-blue);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+/* Glass Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: var(--accent-neon-blue);
+}
+
+.btn-primary:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--accent-neon-blue);
+  box-shadow: var(--shadow-neon);
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  border-color: var(--border-glass);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--accent-neon-red);
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--accent-neon-red);
+}
+
+/* Glow classes */
+.glow-blue {
+  text-shadow: var(--shadow-neon);
+}
+
+.glow-green {
+  text-shadow: var(--shadow-neon-green);
+}
+
+/* Animation utilities */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Print styles for technical memo report */
+@media print {
+  html,
+  body,
+  #root,
+  .app-container {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+  
+  .no-print,
+  .app-container .no-print,
+  .app-container > div .no-print,
+  .app-container > div > div.no-print,
+  div.no-print,
+  aside.no-print,
+  header.no-print,
+  button.no-print {
+    display: none !important;
+  }
+
+  /* Reset layout constraints to allow printing multiple pages */
+  .app-container > div,
+  .app-container > div > div {
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+
+  /* Make main workspace container expand and not scroll */
+  #rack-container {
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: none !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  .rack-scroll-wrapper {
+    height: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Scale first page rack layout with cables using Zoom for correct layout footprint */
+  #rack-content-wrapper {
+    zoom: 0.26 !important;
+    transform: none !important;
+    width: 1350px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    height: auto !important;
+    display: block !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #rack-content-wrapper > div {
+    align-items: center !important;
+  }
+
+  /* Scale second page rack layout without cables */
+  .print-rack-wrapper {
+    zoom: 0.26 !important;
+    width: 1350px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    height: auto !important;
+    display: block !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-rack-wrapper > div {
+    align-items: center !important;
+  }
+
+  #rack-table,
+  #rack-table-print {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Show the report print area */
+  .print-report-container {
+    display: block !important;
+    background: #fff !important;
+    color: #000 !important;
+    width: 100% !important;
+    padding: 20px 0 !important;
+    page-break-before: always;
+  }
+
+  .print-report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  .print-report-table th, 
+  .print-report-table td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 6px 10px !important;
+    text-align: left !important;
+    font-size: 0.8rem !important;
+    color: #000 !important;
+  }
+
+  .print-report-table th {
+    background-color: #f1f5f9 !important;
+    font-weight: bold !important;
+  }
+}
+
+/* Hide report container on screen */
+.print-report-container {
+  display: none;
+}
+
+/* Hide print-only elements on screen */
+.print-only {
+  display: none !important;
+}
+
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}

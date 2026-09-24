@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+rackdraw-deploy/frontend/node_modules/
+rackdraw-deploy/backend/node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+*.env
+
+# Database
+postgres_data/
+prisma/*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Scratch / local dev notes
+scratch/

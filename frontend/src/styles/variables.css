@@ -1,0 +1,126 @@
+:root {
+  /* Color Palette - Deep Dark Tech Theme */
+  --bg-deep: #0b0f19;
+  --bg-panel: rgba(17, 24, 39, 0.75);
+  --bg-panel-solid: #111827;
+  --bg-card: rgba(30, 41, 59, 0.5);
+  --bg-card-hover: rgba(30, 41, 59, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-focus: rgba(56, 189, 248, 0.4);
+
+  /* Neon Cable Colors & UI Highlights (Dark) */
+  --accent-neon-blue: #38bdf8;       /* Cat6 / Data high-speed */
+  --accent-neon-green: #22c55e;      /* Management / OK */
+  --accent-neon-orange: #f97316;     /* Fiber Multi-Mode */
+  --accent-neon-purple: #a855f7;     /* Fiber Single-Mode */
+  --accent-neon-yellow: #eab308;     /* Power A */
+  --accent-neon-red: #ef4444;        /* Power B / Warning */
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Font Families */
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Layout and UI Dimensions */
+  --sidebar-width: 280px;
+  --header-height: 64px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Glassmorphism Blur effect */
+  --blur-glass: blur(12px);
+  --shadow-neon: 0 0 15px rgba(56, 189, 248, 0.35);
+  --shadow-neon-green: 0 0 15px rgba(34, 197, 94, 0.35);
+
+  /* Theme-Dependent Cabinet & Hardware Styles (Dark) */
+  --cabinet-bg: #0b0f19;
+  --cabinet-border: #334155;
+  --cabinet-header: #1e293b;
+  --empty-slot-bg: rgba(15, 23, 42, 0.45);
+  --empty-slot-text: rgba(255, 255, 255, 0.15);
+  --empty-slot-border: rgba(255, 255, 255, 0.015);
+  --port-rack-bg: rgba(0, 0, 0, 0.35);
+  --port-rack-border: #1e293b;
+  --port-unconnected-bg: #1e293b;
+  --port-unconnected-border: rgba(255, 255, 255, 0.12);
+
+  /* Brand-specific Hardware Faceplates (Dark) */
+  --device-bg-fortinet: linear-gradient(90deg, #271d1e 0%, #1e1b1b 100%);
+  --device-border-fortinet: #7f1d1d;
+  --device-bg-dell: repeating-linear-gradient(90deg, #111827, #111827 4px, #1f2937 4px, #1f2937 8px);
+  --device-border-dell: #374151;
+  --device-bg-juniper: linear-gradient(to right, #111e25 0%, #0c1317 100%);
+  --device-border-juniper: #115e59;
+  --device-bg-cisco: linear-gradient(to right, #1f2937 0%, #111827 100%);
+  --device-border-cisco: #1e3a8a;
+  --device-bg-hpe: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  --device-border-hpe: #475569;
+  --device-bg-panduit: #090d16;
+  --device-border-panduit: #1e293b;
+  --device-bg-f5: linear-gradient(90deg, #180f14 0%, #0d0a0c 100%);
+  --device-border-f5: #500730;
+  --device-bg-generic: linear-gradient(to right, #1e293b 0%, #0f172a 100%);
+  --device-border-generic: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+  /* Color Palette - Clean Light Tech Theme */
+  --bg-deep: #f1f5f9;
+  --bg-panel: rgba(255, 255, 255, 0.85);
+  --bg-panel-solid: #ffffff;
+  --bg-card: rgba(241, 245, 249, 0.75);
+  --bg-card-hover: rgba(226, 232, 240, 0.9);
+  --border-glass: rgba(15, 23, 42, 0.08);
+  --border-glass-focus: rgba(2, 132, 199, 0.5);
+
+  /* Solid Contrast Cable Colors (Light) */
+  --accent-neon-blue: #0284c7;       /* Cat6 / Data */
+  --accent-neon-green: #16a34a;      /* Management / OK */
+  --accent-neon-orange: #ea580c;     /* Fiber MM */
+  --accent-neon-purple: #9333ea;     /* Fiber SM */
+  --accent-neon-yellow: #d97706;     /* Power A */
+  --accent-neon-red: #dc2626;        /* Power B / Warning */
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  /* Shadow & Glow Adjustments for Light background */
+  --shadow-neon: 0 0 10px rgba(2, 132, 199, 0.2);
+  --shadow-neon-green: 0 0 10px rgba(22, 163, 74, 0.2);
+
+  /* Theme-Dependent Cabinet & Hardware Styles (Light) */
+  --cabinet-bg: #f8fafc;
+  --cabinet-border: #cbd5e1;
+  --cabinet-header: #cbd5e1;
+  --empty-slot-bg: rgba(226, 232, 240, 0.6);
+  --empty-slot-text: rgba(71, 85, 105, 0.85);
+  --empty-slot-border: rgba(15, 23, 42, 0.05);
+  --port-rack-bg: rgba(255, 255, 255, 0.95);
+  --port-rack-border: #cbd5e1;
+  --port-unconnected-bg: #f1f5f9;
+  --port-unconnected-border: rgba(15, 23, 42, 0.12);
+
+  /* Brand-specific Hardware Faceplates (Light) */
+  --device-bg-fortinet: linear-gradient(90deg, #fee2e2 0%, #fee2e2 100%);
+  --device-border-fortinet: #fca5a5;
+  --device-bg-dell: repeating-linear-gradient(90deg, #f8fafc, #f8fafc 4px, #f1f5f9 4px, #f1f5f9 8px);
+  --device-border-dell: #cbd5e1;
+  --device-bg-juniper: linear-gradient(to right, #f0fdfa 0%, #ccfbf1 100%);
+  --device-border-juniper: #99f6e4;
+  --device-bg-cisco: linear-gradient(to right, #f0f9ff 0%, #e0f2fe 100%);
+  --device-border-cisco: #bae6fd;
+  --device-bg-hpe: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --device-border-hpe: #cbd5e1;
+  --device-bg-panduit: #f1f5f9;
+  --device-border-panduit: #cbd5e1;
+  --device-bg-f5: linear-gradient(90deg, #fdf2f8 0%, #fbcfe8 100%);
+  --device-border-f5: #fbcfe8;
+  --device-bg-generic: linear-gradient(to right, #f8fafc 0%, #f1f5f9 100%);
+  --device-border-generic: rgba(15, 23, 42, 0.08);
+}

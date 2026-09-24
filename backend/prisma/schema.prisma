@@ -1,0 +1,98 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  racks       Rack[]
+
+  @@map("projects")
+}
+
+model Rack {
+  id        String   @id @default(uuid())
+  projectId String   @map("project_id")
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name      String
+  heightU   Int      @map("height_u")
+  createdAt DateTime @default(now()) @map("created_at")
+  devices   Device[]
+
+  @@map("racks")
+}
+
+model Device {
+  id           String   @id @default(uuid())
+  rackId       String   @map("rack_id")
+  rack         Rack     @relation(fields: [rackId], references: [id], onDelete: Cascade)
+  name         String
+  brand        String
+  model        String
+  serialNumber String   @map("serial_number")
+  positionU    Int      @map("position_u") // U starting position
+  heightU      Int      @map("height_u")   // Size in U units
+  metadata     Json?                       // Meta config (PSUs, interface descriptions)
+  createdAt    DateTime @default(now()) @map("created_at")
+  ports        Port[]
+
+  @@map("devices")
+}
+
+enum PortType {
+  COPPER
+  SFP_FIBER
+  GBIC_FIBER
+  MGMT
+  POWER
+}
+
+model Port {
+  id              String       @id @default(uuid())
+  deviceId        String       @map("device_id")
+  device          Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  name            String
+  type            PortType
+  speed           String       @default("1Gbps")
+  direction       String       @default("BIDIRECTIONAL") // IN, OUT, BIDIRECTIONAL
+  createdAt       DateTime     @default(now()) @map("created_at")
+  
+  connectedSource Connection?  @relation("SourcePort")
+  connectedDest   Connection?  @relation("DestPort")
+
+  @@map("ports")
+}
+
+enum CableType {
+  CAT5E
+  CAT6
+  SM_FIBER
+  MM_FIBER
+  DAC
+  POWER
+}
+
+model Connection {
+  id             String    @id @default(uuid())
+  
+  sourcePortId   String    @unique @map("source_port_id")
+  sourcePort     Port      @relation("SourcePort", fields: [sourcePortId], references: [id], onDelete: Cascade)
+  
+  destPortId     String    @unique @map("dest_port_id")
+  destPort       Port      @relation("DestPort", fields: [destPortId], references: [id], onDelete: Cascade)
+  
+  cableType      CableType @map("cable_type")
+  cableColor     String    @map("cable_color")
+  lengthMeters   Float     @map("length_meters")
+  labelTag       String?   @map("label_tag")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@map("connections")
+}
