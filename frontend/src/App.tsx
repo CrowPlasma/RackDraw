@@ -5,9 +5,11 @@ import CablingOverlay from './components/canvas/CablingOverlay';
 import WireListPanel from './components/layout/WireListPanel';
 import ConnectionModal from './components/ui/ConnectionModal';
 import { useRackStore, Port, Device, Connection } from './store/useRackStore';
-import { Cable, RefreshCw, Info, Sun, Moon, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Printer, Download } from 'lucide-react';
+import { Cable, RefreshCw, Info, Sun, Moon, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Printer, Download, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+  const { t, i18n } = useTranslation();
   const { rackDetails, activeRack, isLoading, error, toasts, dismissToast, wirelist, setActiveDevice, activeProject, showToast } = useRackStore();
 
   // Connection mapping state (Packet Tracer style)
@@ -49,6 +51,12 @@ function App() {
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('rackdraw-theme', newTheme);
+  };
+
+  const toggleLang = () => {
+    const newLang = i18n.language === 'en' ? 'es' : 'en';
+    i18n.changeLanguage(newLang);
+    localStorage.setItem('rackdraw-lang', newLang);
   };
 
   const handleExportCSV = () => {
@@ -362,20 +370,41 @@ function App() {
             </>
           )}
 
-          <button 
-            onClick={toggleTheme}
-            className="btn btn-secondary" 
-            style={{ 
-              padding: '8px 12px', 
-              borderRadius: 'var(--radius-sm)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              border: '1px solid var(--border-glass)',
-            }}
-          >
-            {theme === 'dark' ? <Sun size={16} color="var(--accent-neon-yellow)" /> : <Moon size={16} color="var(--accent-neon-blue)" />}
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button 
+              onClick={toggleLang}
+              className="btn btn-secondary" 
+              style={{ 
+                padding: '8px 12px', 
+                borderRadius: 'var(--radius-sm)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--border-glass)',
+                gap: '6px',
+                fontSize: '0.8rem',
+                fontWeight: 600,
+              }}
+              title="Cambiar Idioma / Change Language"
+            >
+              <Globe size={16} color="var(--accent-neon-blue)" /> {i18n.language.toUpperCase()}
+            </button>
+
+            <button 
+              onClick={toggleTheme}
+              className="btn btn-secondary" 
+              style={{ 
+                padding: '8px 12px', 
+                borderRadius: 'var(--radius-sm)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid var(--border-glass)',
+              }}
+            >
+              {theme === 'dark' ? <Sun size={16} color="var(--accent-neon-yellow)" /> : <Moon size={16} color="var(--accent-neon-blue)" />}
+            </button>
+          </div>
         </div>
       </header>
 
