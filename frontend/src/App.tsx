@@ -61,7 +61,7 @@ function App() {
 
   const handleExportCSV = () => {
     if (!activeRack || !wirelist || wirelist.length === 0) {
-      showToast('No hay cables para exportar en este rack.', 'info');
+      showToast(t("toast.noCablesToExport"), 'info');
       return;
     }
 

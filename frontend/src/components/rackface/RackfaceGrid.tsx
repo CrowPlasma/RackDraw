@@ -232,7 +232,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
         ports: portsToCreate
       });
       
-      showToast(`Equipo clonado exitosamente en U${targetU}.`, 'success');
+      showToast(`${t("toast.deviceCloned")}${targetU}.`, 'success');
     } catch (err: any) {
       // Store handles toast error
     }
@@ -260,7 +260,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
         }
       });
       setShowEditDeviceModal(false);
-      showToast('Equipo actualizado correctamente.', 'success');
+      showToast(t("toast.deviceUpdated"), 'success');
     } catch (_err) {
       // Errors handled by store toasts
     }

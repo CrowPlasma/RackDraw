@@ -6,6 +6,25 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Active",
+        "toast": {
+            "noSpaceToClone": "Not enough space in the rack to clone this device.",
+            "deviceCloned": "Device successfully cloned in U",
+            "deviceUpdated": "Device successfully updated.",
+            "noCablesToExport": "No cables to export in this rack.",
+            "projectCreated": "Project created successfully.",
+            "projectUpdated": "Project updated.",
+            "projectDeleted": "Project deleted.",
+            "rackCreated": "Rack created successfully.",
+            "rackUpdated": "Rack updated.",
+            "rackDeleted": "Rack deleted.",
+            "deviceMounted": "Device mounted in rack.",
+            "deviceRemoved": "Device removed successfully.",
+            "portAdded": "Port added successfully.",
+            "portRemoved": "Port removed successfully.",
+            "cableInstalled": "Cable installed successfully.",
+            "cableModified": "Cable modified successfully.",
+            "cableDisconnected": "Cable disconnected and removed."
+        },
         "welcome": "Welcome to RackDraw",
         "tagline": "Intelligent Rack Management",
         "printPdf": "Print Technical Report (PDF)",
@@ -164,6 +183,25 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Activo",
+        "toast": {
+            "noSpaceToClone": "No hay espacio suficiente en el Rack para clonar este equipo.",
+            "deviceCloned": "Equipo clonado exitosamente en U",
+            "deviceUpdated": "Equipo actualizado correctamente.",
+            "noCablesToExport": "No hay cables para exportar en este rack.",
+            "projectCreated": "Proyecto creado exitosamente.",
+            "projectUpdated": "Proyecto actualizado.",
+            "projectDeleted": "Proyecto eliminado.",
+            "rackCreated": "Rack creado exitosamente.",
+            "rackUpdated": "Rack actualizado.",
+            "rackDeleted": "Rack eliminado.",
+            "deviceMounted": "Equipo montado en el rack.",
+            "deviceRemoved": "Equipo retirado correctamente.",
+            "portAdded": "Puerto agregado correctamente.",
+            "portRemoved": "Puerto eliminado correctamente.",
+            "cableInstalled": "Cable instalado con éxito.",
+            "cableModified": "Cable modificado con éxito.",
+            "cableDisconnected": "Cable desconectado y retirado."
+        },
         "welcome": "Bienvenido a RackDraw",
         "tagline": "Gestión Inteligente de Racks",
         "printPdf": "Imprimir Memoria Técnica (PDF)",
