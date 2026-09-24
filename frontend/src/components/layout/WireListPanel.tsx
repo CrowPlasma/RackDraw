@@ -206,7 +206,7 @@ export default function WireListPanel({
       case 'CAT5E':
       case 'CAT6':
       case 'DAC':
-        return 'Cobre';
+        return t("wirelist.copper");
       case 'FIBER':
       case 'SM_FIBER':
       case 'MM_FIBER':
@@ -382,7 +382,7 @@ export default function WireListPanel({
                   onChange={(e) => setCableType(e.target.value)}
                   style={{ padding: '6px 10px', fontSize: '0.8rem' }}
                 >
-                  <option value="CAT6">Cobre</option>
+                  <option value="CAT6">{t("wirelist.copper")}</option>
                   <option value="SM_FIBER">Fibra</option>
                   <option value="POWER">{t("wirelist.power")}</option>
                 </select>
@@ -441,7 +441,7 @@ export default function WireListPanel({
                 className="btn btn-primary"
                 style={{ padding: '8px', fontSize: '0.8rem', gap: '4px' }}
               >
-                <Save size={13} /> Guardar
+                <Save size={13} /> {t("wirelist.save")}
               </button>
             </div>
           </form>
@@ -745,16 +745,14 @@ export default function WireListPanel({
                           className="btn btn-secondary"
                           style={{ padding: '4px 10px', fontSize: '0.75rem' }}
                           onClick={() => setEditingConnectionId(null)}
-                        >
-                          Cancelar
-                        </button>
+                        >{t("wirelist.cancel")}</button>
                         <button
                           type="button"
                           className="btn btn-primary"
                           style={{ padding: '4px 10px', fontSize: '0.75rem', gap: '4px' }}
                           onClick={() => handleSaveEditConnection(conn)}
                         >
-                          <Save size={12} /> Guardar
+                          <Save size={12} /> {t("wirelist.save")}
                         </button>
                       </div>
                     </div>
@@ -938,7 +936,7 @@ export default function WireListPanel({
 
                 <div style={{ display: 'flex', gap: '10px', marginTop: '14px' }}>
                   <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
-                    <Save size={15} /> Guardar Chasis
+                    <Save size={15} /> {t("rackface.save")}
                   </button>
                 </div>
               </form>
@@ -1152,9 +1150,7 @@ export default function WireListPanel({
                 <button
                   className="btn btn-secondary"
                   onClick={() => setDeleteCableTarget(null)}
-                >
-                  Cancelar
-                </button>
+                >{t("wirelist.cancel")}</button>
                 <button
                   className="btn"
                   onClick={handleConfirmDeleteCable}
@@ -1220,9 +1216,7 @@ export default function WireListPanel({
             </p>
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-              <button className="btn btn-secondary" onClick={() => setDeletePortTarget(null)}>
-                Cancelar
-              </button>
+              <button className="btn btn-secondary" onClick={() => setDeletePortTarget(null)}>{t("wirelist.cancel")}</button>
               <button
                 className="btn"
                 onClick={handleConfirmDeletePort}
