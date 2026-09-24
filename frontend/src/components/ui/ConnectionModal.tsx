@@ -16,7 +16,7 @@ const CABLE_PRESETS = [
   { label: 'Cobre (Azul)', type: 'CAT6', color: '#38bdf8' },
   { label: 'Fibra (Naranja)', type: 'SM_FIBER', color: '#f97316' },
   { label: 'Fibra (Morado)', type: 'SM_FIBER', color: '#a855f7' },
-  { label: 'Línea de Energía (Amarillo)', type: 'POWER', color: '#eab308' },
+  { label: 'Power Line (Amarillo)', type: 'POWER', color: '#eab308' },
 ];
 
 export default function ConnectionModal({
@@ -98,7 +98,7 @@ export default function ConnectionModal({
             <Link2 size={20} color="#000" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Mapear Nueva Conexión</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>{t("connection.mapNew")}</h3>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Packet Tracer Interface Mapper</span>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function ConnectionModal({
             >
               <option value="CAT6">Cobre</option>
               <option value="SM_FIBER">Fibra</option>
-              <option value="POWER">Línea de Energía</option>
+              <option value="POWER">Power Line</option>
             </select>
           </div>
 
@@ -223,7 +223,7 @@ export default function ConnectionModal({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Etiqueta física (Opcional)</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("connection.physicalLabel")}</label>
             <input
               type="text"
               className="input-field"
@@ -238,7 +238,7 @@ export default function ConnectionModal({
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
           <button type="button" className="btn btn-secondary" onClick={onClose}>{t('connectionModal.cancel')}</button>
           <button type="submit" className="btn btn-primary" style={{ gap: '6px' }}>
-            <Cable size={15} /> Confirmar Conexión
+            <Cable size={15} /> {t("connection.confirm")}
           </button>
         </div>
       </form>

@@ -6,6 +6,15 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Active",
+        "tagline": "Intelligent Rack Management",
+        "printPdf": "Print Technical Report (PDF)",
+        "rackLayoutWith": "Physical Rack Layout (With Cabling)",
+        "welcomeMsg": "Create or select a project in the left menu, then open a rack to start mounting and cabling equipment.",
+        "selectionOnly": "Selection Only",
+        "rackLayoutWithout": "Physical Rack Layout (Without Cabling)",
+        "reportTitle": "Infrastructure Technical Report (RackDraw Report)",
+        "projectDesc": "Project Description:",
+        "issueDate": "Issue Date:",
         "exportCSV": "Export (CSV)",
         "generateReport": "Generate Report"
       },
@@ -63,7 +72,25 @@ const resources = {
         "removeCable": "Remove Cable",
         "cannotUndo": "This action cannot be undone",
         "disconnectPrompt": "Disconnect and remove this cable from the rack? The ports will become available for new connections.",
-        "linkDetail": "LINK DETAIL"
+        "linkDetail": "LINK DETAIL",
+        "selectedPort": "SELECTED PORT",
+        "port": "Port",
+        "speed": "Speed",
+        "unassignedInterface": "Unassigned Interface",
+        "unassignedDesc": "This network port is not connected to any cable in this rack.",
+        "startCabling": "Start Cabling from Here",
+        "power": "Power",
+        "copper": "Copper",
+        "fiber": "Fiber",
+        "editConnection": "Edit Network Connection",
+        "noResults": "No results for that search.",
+        "noCables": "No cables installed.",
+        "cancelEdit": "Cancel edit",
+        "editCable": "Edit cable",
+        "deletePort": "Delete Port",
+        "deletePortMsg": "Delete port",
+        "networkInterfaces": "Network Interfaces",
+        "noPorts": "No assigned ports"
       },
       "connection": {
         "sourceDev": "Source Device",
@@ -80,7 +107,10 @@ const resources = {
         "cableType": "Cable Type",
         "cableLabel": "Cable Label",
         "remove": "Remove",
-        "actual": "(Current)"
+        "actual": "(Current)",
+        "mapNew": "Map New Connection",
+        "physicalLabel": "Physical Label (Optional)",
+        "confirm": "Confirm Connection"
       },
       "rackface": {
         "deviceDetails": "Device Details",
@@ -117,7 +147,14 @@ const resources = {
         "nameEj": "Name (e.g. Gi1/0/1)",
         "addPort": "+ Add Port",
         "modifyChassis": "Modify chassis data",
-        "hardwareConfig": "Hardware and interfaces configuration"
+        "hardwareConfig": "Hardware and interfaces configuration",
+        "mod": "Mod",
+        "cloneTooltip": "Clone device in next available space",
+        "dropToMove": "Drop here to move",
+        "mountInU": "Mount in U",
+        "sizeU": "Size (U Units)",
+        "confirmDeleteQ": "Delete",
+        "confirmDeleteSub": "? All its cable connections will also be removed."
       }
     }
   },
@@ -125,6 +162,15 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Activo",
+        "tagline": "Gestión Inteligente de Racks",
+        "printPdf": "Imprimir Memoria Técnica (PDF)",
+        "rackLayoutWith": "Distribución Física del Rack (Con Cableado)",
+        "welcomeMsg": "Crea o selecciona un proyecto en el menú de la izquierda, luego abre un rack para comenzar a montar y cablear equipos.",
+        "selectionOnly": "Solo Selección",
+        "rackLayoutWithout": "Distribución Física del Rack (Sin Cableado)",
+        "reportTitle": "Memoria Técnica de Infraestructura (RackDraw Report)",
+        "projectDesc": "Descripción del Proyecto:",
+        "issueDate": "Fecha de Emisión:",
         "exportCSV": "Exportar (CSV)",
         "generateReport": "Generar Reporte"
       },
@@ -182,7 +228,25 @@ const resources = {
         "removeCable": "Retirar Cable",
         "cannotUndo": "Esta acción no se puede deshacer",
         "disconnectPrompt": "¿Desconectar y retirar este cable del rack? Los puertos quedarán disponibles para nuevas conexiones.",
-        "linkDetail": "DETALLE DE ENLACE"
+        "linkDetail": "DETALLE DE ENLACE",
+        "selectedPort": "PUERTO SELECCIONADO",
+        "port": "Puerto",
+        "speed": "Velocidad",
+        "unassignedInterface": "Interfaz no asignada",
+        "unassignedDesc": "Este puerto de red no está conectado a ningún cable en este rack.",
+        "startCabling": "Iniciar Cableado desde Aquí",
+        "power": "Energía",
+        "copper": "Cobre",
+        "fiber": "Fibra",
+        "editConnection": "Editar Conexión de Red",
+        "noResults": "Sin resultados para esa búsqueda.",
+        "noCables": "No hay cables instalados.",
+        "cancelEdit": "Cancelar edición",
+        "editCable": "Editar cable",
+        "deletePort": "Eliminar Puerto",
+        "deletePortMsg": "¿Eliminar el puerto ",
+        "networkInterfaces": "Interfaces de Red",
+        "noPorts": "Sin puertos asignados"
       },
       "connection": {
         "sourceDev": "Equipo Origen",
@@ -199,7 +263,10 @@ const resources = {
         "cableType": "Tipo de Cable",
         "cableLabel": "Etiqueta Cable",
         "remove": "Retirar",
-        "actual": "(Actual)"
+        "actual": "(Actual)",
+        "mapNew": "Mapear Nueva Conexión",
+        "physicalLabel": "Etiqueta física (Opcional)",
+        "confirm": "Confirmar Conexión"
       },
       "rackface": {
         "deviceDetails": "Detalles del Equipo",
@@ -236,7 +303,14 @@ const resources = {
         "nameEj": "Nombre (ej. Gi1/0/2)",
         "addPort": "+ Agregar Puerto",
         "modifyChassis": "Modificar datos del chasis",
-        "hardwareConfig": "Configuración de hardware e interfaces"
+        "hardwareConfig": "Configuración de hardware e interfaces",
+        "mod": "Mod",
+        "cloneTooltip": "Clonar equipo en siguiente espacio disponible",
+        "dropToMove": "Soltar aquí para mover",
+        "mountInU": "Montar en U",
+        "sizeU": "Tamaño (Unidades U)",
+        "confirmDeleteQ": "¿Eliminar",
+        "confirmDeleteSub": "? Se eliminarán también todas sus conexiones de cableado."
       }
     }
   }

@@ -214,7 +214,7 @@ export default function WireListPanel({
       case 'SFP_FIBER':
         return 'Fibra';
       case 'POWER':
-        return 'Energía';
+        return t('wirelist.power');
       default:
         return type;
     }
@@ -259,7 +259,7 @@ export default function WireListPanel({
         <div style={{ flex: '0 0 auto' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--accent-neon-blue)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-              ⚙️ Editar Conexión de Red
+              ⚙️ {t("wirelist.editConnection")}
             </h3>
             <button 
               onClick={onClearSelection}
@@ -279,7 +279,7 @@ export default function WireListPanel({
             {/* Source Device Dropdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Equipo Origen
+                {t("connection.sourceDev")}
               </label>
               <select
                 className="input-field"
@@ -304,7 +304,7 @@ export default function WireListPanel({
             {/* Source Port Dropdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Puerto Origen
+                {t("connection.sourcePort")}
               </label>
               <select
                 className="input-field"
@@ -327,7 +327,7 @@ export default function WireListPanel({
             {/* Dest Device Dropdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Equipo Destino
+                {t("connection.targetDev")}
               </label>
               <select
                 className="input-field"
@@ -352,7 +352,7 @@ export default function WireListPanel({
             {/* Dest Port Dropdown */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
               <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Puerto Destino
+                {t("connection.targetPort")}
               </label>
               <select
                 className="input-field"
@@ -384,7 +384,7 @@ export default function WireListPanel({
                 >
                   <option value="CAT6">Cobre</option>
                   <option value="SM_FIBER">Fibra</option>
-                  <option value="POWER">Energía</option>
+                  <option value="POWER">{t("wirelist.power")}</option>
                 </select>
               </div>
 
@@ -451,7 +451,7 @@ export default function WireListPanel({
         <div style={{ flex: '0 0 auto' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
             <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-              ⚙️ Puerto Seleccionado
+              ⚙️ {t("wirelist.selectedPort")}
             </h3>
             <button 
               onClick={onClearSelection}
@@ -474,10 +474,10 @@ export default function WireListPanel({
                 {selectedPortDevice.name}
               </span>
               <h4 style={{ fontSize: '1rem', fontWeight: 700, margin: '2px 0 4px 0' }}>
-                Puerto: {selectedPort.name}
+                {t("wirelist.port")}: {selectedPort.name}
               </h4>
               <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                Tipo: {selectedPort.type} • Velocidad: {selectedPort.speed}
+                {t("wirelist.type")}: {selectedPort.type} • {t("wirelist.speed")}: {selectedPort.speed}
               </p>
             </div>
 
@@ -494,10 +494,10 @@ export default function WireListPanel({
               <AlertTriangle size={15} color="var(--accent-neon-red)" style={{ marginTop: '2px', flexShrink: 0 }} />
               <div>
                 <strong style={{ fontSize: '0.78rem', color: 'var(--accent-neon-red)', display: 'block' }}>
-                  Interfaz no asignada
+                  {t("wirelist.unassignedInterface")}
                 </strong>
                 <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                  Este puerto de red no está conectado a ningún cable en este rack.
+                  {t("wirelist.unassignedDesc")}
                 </span>
               </div>
             </div>
@@ -507,7 +507,7 @@ export default function WireListPanel({
               className="btn btn-primary"
               style={{ width: '100%', gap: '6px', fontSize: '0.8rem', padding: '8px' }}
             >
-              <Link2 size={14} /> Iniciar Cableado desde Aquí
+              <Link2 size={14} /> {t("wirelist.startCabling")}
             </button>
           </div>
         </div>
@@ -572,7 +572,7 @@ export default function WireListPanel({
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>
           {selectedConnection 
-            ? 'Detalle de Enlace' 
+            ? t('wirelist.linkDetail') 
             : activeDevice 
               ? `${t('wirelist.cablesOf')} ${activeDevice.name}` 
               : t('wirelist.fullList')}
@@ -619,7 +619,7 @@ export default function WireListPanel({
             if (filteredList.length === 0) {
               return (
                 <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem', border: '1px dashed var(--border-glass)', borderRadius: 'var(--radius-sm)' }}>
-                  {searchTerm ? 'Sin resultados para esa búsqueda.' : 'No hay cables instalados.'}
+                  {searchTerm ? '{t("wirelist.noResults")}' : '{t("wirelist.noCables")}'}
                 </div>
               );
             }
@@ -658,7 +658,7 @@ export default function WireListPanel({
                         {/* Edit button */}
                         <button
                           onClick={() => isEditing ? setEditingConnectionId(null) : handleOpenEditConnection(conn)}
-                          title={isEditing ? 'Cancelar edición' : 'Editar cable'}
+                          title={isEditing ? '{t("wirelist.cancelEdit")}' : '{t("wirelist.editCable")}'}
                           style={{
                             background: isEditing ? 'rgba(56,189,248,0.12)' : 'none',
                             border: isEditing ? '1px solid var(--accent-neon-blue)' : 'none',
@@ -822,7 +822,7 @@ export default function WireListPanel({
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Editar Equipo: {activeDevice.name}</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Configuración de hardware e interfaces</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.hardwareConfig")}</span>
                 </div>
               </div>
               <button 
@@ -877,7 +877,7 @@ export default function WireListPanel({
                     />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Número de Serie</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.sn")}</label>
                     <input 
                       type="text" 
                       required 
@@ -890,7 +890,7 @@ export default function WireListPanel({
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Slot Posición (U)</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.slotPos")}</label>
                     <input 
                       type="number" 
                       required 
@@ -946,7 +946,7 @@ export default function WireListPanel({
               {/* Right Column: Interfaces / Ports Editor */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', borderLeft: '1px solid var(--border-glass)', paddingLeft: '24px' }}>
                 <h4 style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-neon-blue)', letterSpacing: '0.5px', textTransform: 'uppercase', borderBottom: '1px solid var(--border-glass)', paddingBottom: '6px' }}>
-                  Interfaces de Red ({activeDevice.ports.length})
+                  {t("wirelist.networkInterfaces")} ({activeDevice.ports.length})
                 </h4>
 
                 {/* Ports List */}
@@ -962,7 +962,7 @@ export default function WireListPanel({
                 }}>
                   {activeDevice.ports.length === 0 ? (
                     <div style={{ padding: '16px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
-                      Sin puertos asignados
+                      {t("wirelist.noPorts")}
                     </div>
                   ) : (
                     activeDevice.ports.map((port) => (
@@ -1144,7 +1144,7 @@ export default function WireListPanel({
               </div>
 
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                ¿Desconectar y retirar este cable del rack? Los puertos quedarán disponibles para nuevas conexiones.
+                {t("wirelist.disconnectPrompt")}
               </p>
 
               {/* Actions */}
@@ -1206,17 +1206,17 @@ export default function WireListPanel({
                 <Trash2 size={20} color="var(--accent-neon-red)" />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Eliminar Puerto</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Esta acción no se puede deshacer</span>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{t("wirelist.deletePort")}</h3>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
               </div>
             </div>
 
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-              ¿Eliminar el puerto{' '}
+              {t("wirelist.deletePortMsg")}{' '}
               <strong style={{ color: 'var(--text-primary)', fontFamily: 'monospace' }}>
                 {deletePortTarget.portName}
               </strong>?{' '}
-              Se eliminarán también todas sus conexiones de cableado.
+              {t("rackface.confirmDeleteSub")}
             </p>
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>

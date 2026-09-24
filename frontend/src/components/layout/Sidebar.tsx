@@ -526,7 +526,7 @@ export default function Sidebar() {
               </div>
               <div>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Eliminar Proyecto</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Esta acción no se puede deshacer</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
               </div>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
@@ -565,7 +565,7 @@ export default function Sidebar() {
               </div>
               <div>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Eliminar Rack</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Esta acción no se puede deshacer</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
               </div>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>

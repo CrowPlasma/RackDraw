@@ -538,7 +538,7 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al conectar los puertos.');
       }
-      get().showToast('Cable instalado con éxito.', 'success');
+      get().showToast('Cable installed successfully.', 'success');
       await get().selectRack(activeRack.id);
     } catch (err: any) {
       set({ isLoading: false });
@@ -561,7 +561,7 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al actualizar el cable.');
       }
-      get().showToast('Cable modificado con éxito.', 'success');
+      get().showToast('Cable modified successfully.', 'success');
       await get().selectRack(activeRack.id);
     } catch (err: any) {
       set({ isLoading: false });

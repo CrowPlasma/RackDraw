@@ -519,7 +519,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
     const isFiber = (port.type as string) === 'FIBER' || port.type === 'SFP_FIBER' || port.type === 'GBIC_FIBER' || (port.type as string).includes('FIBER');
     const borderRadius = isFiber ? '50%' : '1.5px';
 
-    const tooltip = `${port.name} (${isFiber ? 'Fibra' : port.type === 'POWER' ? 'Energía' : 'Cobre'})
+    const tooltip = `${port.name} (${isFiber ? t("wirelist.fiber") : port.type === "POWER" ? t("wirelist.power") : t("wirelist.copper")})
 Estado: ${isConnected ? `Conectado via ${conn?.cableType} (${conn?.labelTag || 'Sin tag'})` : 'Disponible'}
 ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.name}) ➔ ${conn?.destPort?.device?.name} (${conn?.destPort?.name})` : ''}`;
 
@@ -652,10 +652,10 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                     {device.name}
                   </strong>
                   <span style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1 }}>
-                    Mod: {device.model}
+                    {t("rackface.mod")}: {device.model}
                   </span>
                   <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)', fontFamily: 'monospace', lineHeight: 1 }}>
-                    S/N: {device.serialNumber}
+                    {t("rackface.sn")}: {device.serialNumber}
                   </span>
 
                   {/* Action buttons - shown when device is focused */}
@@ -691,7 +691,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                           e.stopPropagation();
                           handleCloneDevice(device);
                         }}
-                        title="Clonar equipo en siguiente espacio disponible"
+                        title={t("rackface.cloneTooltip")}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -1042,7 +1042,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                   e.currentTarget.style.border = '1px solid var(--empty-slot-border)';
                 }}
               >
-                {isHighlightedDropZone ? '🎯 Soltar aquí para mover' : `+ Montar en U${u}`}
+                {isHighlightedDropZone ? '🎯 {t("rackface.dropToMove")}' : `+ {t("rackface.mountInU")}${u}`}
               </div>
             </td>
           </tr>
@@ -1187,7 +1187,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Tamaño (Unidades U)</label>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.sizeU")}</label>
                 <input
                   type="number"
                   required
@@ -1230,7 +1230,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
               gap: '10px'
             }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-neon-blue)' }}>
-                Configuración Manual de Puertos / Interfaces
+                {t("rackface.portConfig")}
               </span>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
@@ -1343,7 +1343,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                   <Edit3 size={16} color="#000" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>Editar Equipo</h3>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700 }}>{t("rackface.editDevice")}</h3>
                   <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>{t("rackface.modifyChassis")}</span>
                 </div>
               </div>
@@ -1359,7 +1359,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
             {/* Fields grid */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre de Equipo</label>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.devName")}</label>
                 <input
                   type="text"
                   required
@@ -1369,7 +1369,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                 />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Marca / Fabricante</label>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.brand")}</label>
                 <input
                   type="text"
                   required
@@ -1382,7 +1382,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Modelo</label>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.model")}</label>
                 <input
                   type="text"
                   required
@@ -1392,7 +1392,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                 />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Número de Serie</label>
+                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.sn")}</label>
                 <input
                   type="text"
                   required
@@ -1404,7 +1404,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Color de Tarjeta (Lateral)</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("rackface.color")}</label>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 <input
                   type="color"
@@ -1433,31 +1433,31 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
               gap: '10px'
             }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-neon-blue)' }}>
-                Configuración Manual de Puertos / Interfaces
+                {t("rackface.portConfig")}
               </span>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>RJ45 (Cobre)</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.copper")}</label>
                   <input type="number" min={0} max={48} className="input-field" value={editCopperCount} onChange={(e) => setEditCopperCount(parseInt(e.target.value) || 0)} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Fibra SFP</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.sfp")}</label>
                   <input type="number" min={0} max={12} className="input-field" value={editSfpCount} onChange={(e) => setEditSfpCount(parseInt(e.target.value) || 0)} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Fibra GBIC</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.gbic")}</label>
                   <input type="number" min={0} max={12} className="input-field" value={editGbicCount} onChange={(e) => setEditGbicCount(parseInt(e.target.value) || 0)} />
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Gestión (Management)</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.mgmt")}</label>
                   <input type="number" min={0} max={4} className="input-field" value={editMgmtCount} onChange={(e) => setEditMgmtCount(parseInt(e.target.value) || 0)} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Alimentación (Power)</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.power")}</label>
                   <input type="number" min={0} max={4} className="input-field" value={editPowerCount} onChange={(e) => setEditPowerCount(parseInt(e.target.value) || 0)} />
                 </div>
               </div>
@@ -1509,13 +1509,13 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                 <Trash2 size={20} color="var(--accent-neon-red)" />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Confirmar Eliminación</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Esta acción no se puede deshacer</span>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{t("rackface.confirm")}</h3>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
               </div>
             </div>
 
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-              ¿Eliminar <strong style={{ color: 'var(--text-primary)' }}>{deleteTargetDevice.name}</strong>? Se eliminarán también todas sus conexiones de cableado.
+              {t("rackface.confirmDeleteQ")} <strong style={{ color: 'var(--text-primary)' }}>{deleteTargetDevice.name}</strong> {t("rackface.confirmDeleteSub")}
             </p>
 
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
@@ -1530,7 +1530,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                 onClick={handleConfirmDelete}
                 style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid var(--accent-neon-red)', color: 'var(--accent-neon-red)' }}
               >
-                <Trash2 size={14} /> Confirmar Eliminación
+                <Trash2 size={14} /> {t("rackface.confirm")}
               </button>
             </div>
           </div>

@@ -363,7 +363,7 @@ function App() {
                   fontSize: '0.8rem',
                   gap: '6px'
                 }}
-                title="Imprimir Memoria Técnica (PDF)"
+                title={t("app.printPdf")}
               >
                 <Printer size={16} /> {t('app.generateReport')}
               </button>
@@ -817,12 +817,12 @@ function App() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px', fontSize: '0.9rem' }}>
             <div>
               <p><strong>Proyecto:</strong> {activeProject?.name}</p>
-              <p><strong>Descripción del Proyecto:</strong> {activeProject?.description || 'N/A'}</p>
+              <p><strong>{t("app.projectDesc")}</strong> {activeProject?.description || 'N/A'}</p>
               <p><strong>Rack / Gabinete:</strong> {rackDetails.name}</p>
               <p><strong>Altura total:</strong> {rackDetails.heightU} U</p>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <p><strong>Fecha de Emisión:</strong> {new Date().toLocaleDateString()}</p>
+              <p><strong>{t("app.issueDate")}</strong> {new Date().toLocaleDateString()}</p>
               <p><strong>Total Equipos Montados:</strong> {rackDetails.devices?.length || 0}</p>
               <p><strong>Total Enlaces Activos:</strong> {wirelist?.length || 0}</p>
             </div>
