@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { useRackStore, Port, Device } from '../../store/useRackStore';
 import { Cable, Link2 } from 'lucide-react';
 
@@ -26,6 +27,7 @@ export default function ConnectionModal({
   destPort,
   destDevice
 }: ConnectionModalProps) {
+  const { t } = useTranslation();
   const { createConnection } = useRackStore();
 
   const [cableType, setCableType] = useState('CAT6');
@@ -234,7 +236,7 @@ export default function ConnectionModal({
 
         {/* Actions */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-          <button type="button" className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+          <button type="button" className="btn btn-secondary" onClick={onClose}>{t('connectionModal.cancel')}</button>
           <button type="submit" className="btn btn-primary" style={{ gap: '6px' }}>
             <Cable size={15} /> Confirmar Conexión
           </button>

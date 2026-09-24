@@ -328,7 +328,7 @@ function App() {
               boxShadow: 'var(--shadow-neon)',
               display: 'inline-block'
             }}></span>
-            <span style={{ color: 'var(--text-secondary)' }}>Docker Activo</span>
+            <span style={{ color: 'var(--text-secondary)' }}>{t('app.dockerActive')}</span>
           </div>
 
           {activeRack && (
@@ -348,7 +348,7 @@ function App() {
                 }}
                 title="Exportar Wirelist a CSV (Excel)"
               >
-                <Download size={16} /> Exportar (CSV)
+                <Download size={16} /> {t('app.exportCSV')}
               </button>
               
               <button 
@@ -365,7 +365,7 @@ function App() {
                 }}
                 title="Imprimir Memoria Técnica (PDF)"
               >
-                <Printer size={16} /> Generar Reporte
+                <Printer size={16} /> {t('app.generateReport')}
               </button>
             </>
           )}

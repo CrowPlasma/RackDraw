@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { useRackStore } from '../../store/useRackStore';
 import { Plus, Server, ChevronDown, Edit3, Trash2 } from 'lucide-react';
 
 export default function Sidebar() {
+  const { t } = useTranslation();
   const {
     projects,
     activeProject,
@@ -308,10 +310,10 @@ export default function Sidebar() {
             flexDirection: 'column',
             gap: '16px'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Crear Nuevo Proyecto</h3>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{t("sidebar.newProject")}</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre del Proyecto</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.projectName")}</label>
               <input
                 type="text"
                 required
@@ -323,7 +325,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Descripción (Opcional)</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.projectDesc")}</label>
               <textarea
                 className="input-field"
                 rows={3}
@@ -336,7 +338,7 @@ export default function Sidebar() {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
               <button type="button" className="btn btn-secondary" onClick={() => setShowProjModal(false)}>Cancelar</button>
-              <button type="submit" className="btn btn-primary">Crear</button>
+              <button type="submit" className="btn btn-primary">{t("sidebar.create")}</button>
             </div>
           </form>
         </div>
@@ -365,7 +367,7 @@ export default function Sidebar() {
             flexDirection: 'column',
             gap: '16px'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Crear Nuevo Rack / Gabinete</h3>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{t("sidebar.createRack")}</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre del Rack</label>
@@ -380,7 +382,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Altura en Unidades (U)</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.heightU")}</label>
               <input
                 type="number"
                 required
@@ -394,7 +396,7 @@ export default function Sidebar() {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
               <button type="button" className="btn btn-secondary" onClick={() => setShowRackModal(false)}>Cancelar</button>
-              <button type="submit" className="btn btn-primary">Crear Rack</button>
+              <button type="submit" className="btn btn-primary">{t("sidebar.createRack")}</button>
             </div>
           </form>
         </div>
@@ -425,7 +427,7 @@ export default function Sidebar() {
             <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Editar Proyecto</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre del Proyecto</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.projectName")}</label>
               <input
                 type="text"
                 required
@@ -436,7 +438,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Descripción (Opcional)</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.projectDesc")}</label>
               <textarea
                 className="input-field"
                 rows={3}
@@ -491,7 +493,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Altura en Unidades (U)</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.heightU")}</label>
               <input
                 type="number"
                 required

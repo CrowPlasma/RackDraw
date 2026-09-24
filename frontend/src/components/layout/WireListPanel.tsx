@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from "react-i18next";
 import { useRackStore, Device, Port, Connection } from '../../store/useRackStore';
 import { Trash2, Save, X, Link2, AlertTriangle, Edit3, Plus } from 'lucide-react';
 
@@ -17,6 +18,7 @@ export default function WireListPanel({
   onClearSelection,
   onStartCabling,
 }: WireListPanelProps) {
+  const { t } = useTranslation();
   const {
     activeDevice,
     wirelist,
@@ -373,7 +375,7 @@ export default function WireListPanel({
             {/* Cable properties */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Tipo de Cable</label>
+                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{t("connection.cableType")}</label>
                 <select
                   className="input-field"
                   value={cableType}
@@ -387,7 +389,7 @@ export default function WireListPanel({
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Longitud (m)</label>
+                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{t("wirelist.lengthM")}</label>
                 <input
                   type="number"
                   required
@@ -403,7 +405,7 @@ export default function WireListPanel({
 
             <div style={{ display: 'grid', gridTemplateColumns: '50px 1fr', gap: '8px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Color</label>
+                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{t("wirelist.color")}</label>
                 <input
                   type="color"
                   className="input-field"
@@ -414,7 +416,7 @@ export default function WireListPanel({
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Etiqueta Cable</label>
+                <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>{t("connection.cableLabel")}</label>
                 <input
                   type="text"
                   className="input-field"
@@ -546,7 +548,7 @@ export default function WireListPanel({
                   <span style={{ fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{activeDevice.serialNumber}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-muted)' }}>Ubicación U:</span>
+                  <span style={{ color: 'var(--text-muted)' }}>{t("rackface.locationU")}</span>
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Slot {activeDevice.positionU} ({activeDevice.heightU}U)</span>
                 </div>
                 <button
@@ -714,7 +716,7 @@ export default function WireListPanel({
                           />
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                          <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Etiqueta</label>
+                          <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>{t("wirelist.tag")}</label>
                           <input
                             type="text"
                             className="input-field"
@@ -766,11 +768,11 @@ export default function WireListPanel({
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', borderTop: '1px solid var(--border-glass)', paddingTop: '6px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: 'var(--text-muted)' }}>Desde:</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{t("wirelist.from")}</span>
                       <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{srcDevName} ({srcPortName})</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: 'var(--text-muted)' }}>Hacia:</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{t("wirelist.to")}</span>
                       <span style={{ color: 'var(--text-primary)', fontWeight: 500 }}>{destDevName} ({destPortName})</span>
                     </div>
                   </div>
@@ -1106,8 +1108,8 @@ export default function WireListPanel({
                   <Trash2 size={20} color="var(--accent-neon-red)" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Retirar Cable</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Esta acción no se puede deshacer</span>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{t("wirelist.removeCable")}</h3>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
                 </div>
               </div>
 
