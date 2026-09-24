@@ -6,6 +6,9 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Active",
+        "origin": "Origin: ",
+        "selectDest": "• Select destination port.",
+        "viewAll": "View All",
         "toast": {
             "noSpaceToClone": "Not enough space in the rack to clone this device.",
             "deviceCloned": "Device successfully cloned in U",
@@ -106,6 +109,12 @@ const resources = {
         "noResults": "No results for that search.",
         "noCables": "No cables installed.",
         "cancelEdit": "Cancel edit",
+        "adjustCable": "Adjust Cable by Type:",
+        "copperBlue": "Copper (Blue)",
+        "fiberOrange": "Fiber (Orange)",
+        "fiberPurple": "Fiber (Purple)",
+        "powerYellow": "Power Line (Yellow)",
+        "cableColor": "Cable Color",
         "editCable": "Edit cable",
         "deletePort": "Delete Port",
         "deletePortMsg": "Delete port",
@@ -161,6 +170,7 @@ const resources = {
         "slot": "Slot",
         "editEquipPorts": "Edit Equipment / Ports",
         "chassisDetails": "CHASSIS DETAILS",
+        "saveChanges": "Save Changes",
         "netInterfaces": "NETWORK INTERFACES",
         "slotPos": "Slot Position (U)",
         "heightU": "Height (U)",
@@ -183,6 +193,9 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Activo",
+        "origin": "Origen: ",
+        "selectDest": "• Selecciona puerto destino.",
+        "viewAll": "Ver Todo",
         "toast": {
             "noSpaceToClone": "No hay espacio suficiente en el Rack para clonar este equipo.",
             "deviceCloned": "Equipo clonado exitosamente en U",
@@ -283,6 +296,12 @@ const resources = {
         "noResults": "Sin resultados para esa búsqueda.",
         "noCables": "No hay cables instalados.",
         "cancelEdit": "Cancelar edición",
+        "adjustCable": "Ajustar Cable por Tipo:",
+        "copperBlue": "Cobre (Azul)",
+        "fiberOrange": "Fibra (Naranja)",
+        "fiberPurple": "Fibra (Morado)",
+        "powerYellow": "Power Line (Amarillo)",
+        "cableColor": "Color del Cable",
         "editCable": "Editar cable",
         "deletePort": "Eliminar Puerto",
         "deletePortMsg": "¿Eliminar el puerto ",
@@ -338,6 +357,7 @@ const resources = {
         "slot": "Slot",
         "editEquipPorts": "Editar Equipo / Puertos",
         "chassisDetails": "DETALLES DEL CHASIS",
+        "saveChanges": "Guardar Cambios",
         "netInterfaces": "INTERFACES DE RED",
         "slotPos": "Slot Posición (U)",
         "heightU": "Altura (U)",

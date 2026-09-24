@@ -12,12 +12,6 @@ interface ConnectionModalProps {
   destDevice: Device;
 }
 
-const CABLE_PRESETS = [
-  { label: 'Cobre (Azul)', type: 'CAT6', color: '#38bdf8' },
-  { label: 'Fibra (Naranja)', type: 'SM_FIBER', color: '#f97316' },
-  { label: 'Fibra (Morado)', type: 'SM_FIBER', color: '#a855f7' },
-  { label: 'Power Line (Amarillo)', type: 'POWER', color: '#eab308' },
-];
 
 export default function ConnectionModal({
   isOpen,
@@ -28,6 +22,13 @@ export default function ConnectionModal({
   destDevice
 }: ConnectionModalProps) {
   const { t } = useTranslation();
+
+  const CABLE_PRESETS = [
+    { label: t("connection.copperBlue"), type: 'CAT6', color: '#38bdf8' },
+    { label: t("connection.fiberOrange"), type: 'SM_FIBER', color: '#f97316' },
+    { label: t("connection.fiberPurple"), type: 'SM_FIBER', color: '#a855f7' },
+    { label: t("connection.powerYellow"), type: 'POWER', color: '#eab308' },
+  ];
   const { createConnection } = useRackStore();
 
   const [cableType, setCableType] = useState('CAT6');
@@ -136,7 +137,7 @@ export default function ConnectionModal({
         {/* Presets Row */}
         <div>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>
-            Ajustar Cable por Tipo:
+            {t("connection.adjustCable")}
           </span>
           <div style={{
             display: 'grid',
@@ -188,7 +189,7 @@ export default function ConnectionModal({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Color del Cable</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("connection.cableColor")}</label>
             <div style={{ display: 'flex', gap: '8px' }}>
               <input
                 type="color"
@@ -236,7 +237,7 @@ export default function ConnectionModal({
 
         {/* Actions */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-          <button type="button" className="btn btn-secondary" onClick={onClose}>{t('connectionModal.cancel')}</button>
+          <button type="button" className="btn btn-secondary" onClick={onClose}>{t("wirelist.cancel")}</button>
           <button type="submit" className="btn btn-primary" style={{ gap: '6px' }}>
             <Cable size={15} /> {t("connection.confirm")}
           </button>

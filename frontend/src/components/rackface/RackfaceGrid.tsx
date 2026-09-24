@@ -520,8 +520,8 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
     const borderRadius = isFiber ? '50%' : '1.5px';
 
     const tooltip = `${port.name} (${isFiber ? t("wirelist.fiber") : port.type === "POWER" ? t("wirelist.power") : t("wirelist.copper")})
-Estado: ${isConnected ? `Conectado via ${conn?.cableType} (${conn?.labelTag || 'Sin tag'})` : 'Disponible'}
-${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.name}) ➔ ${conn?.destPort?.device?.name} (${conn?.destPort?.name})` : ''}`;
+${t("rackface.statusPrefix")}${isConnected ? `${t("rackface.connectedVia")}${conn?.cableType} (${conn?.labelTag || t("rackface.noTag")})` : t("rackface.available")}
+${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.name}) ➔ ${conn?.destPort?.device?.name} (${conn?.destPort?.name})` : ''}`;
 
     const hasSpacing = isCopper && (totalGroupPorts > 12) && ((index + 1) % 6 === 0) && (index + 1 !== totalGroupPorts);
 
@@ -1464,11 +1464,9 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '4px' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowEditDeviceModal(false)}>
-                Cancelar
-              </button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowEditDeviceModal(false)}>{t("wirelist.cancel")}</button>
               <button type="submit" className="btn btn-primary">
-                <Save size={14} /> Guardar Cambios
+                <Save size={14} /> {t("rackface.saveChanges")}
               </button>
             </div>
           </form>
@@ -1522,9 +1520,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
               <button
                 className="btn btn-secondary"
                 onClick={() => { setShowDeleteConfirm(false); setDeleteTargetDevice(null); }}
-              >
-                Cancelar
-              </button>
+              >{t("wirelist.cancel")}</button>
               <button
                 className="btn btn-danger"
                 onClick={handleConfirmDelete}

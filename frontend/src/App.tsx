@@ -300,7 +300,7 @@ function App() {
                 display: 'inline-block'
               }}></span>
               <span>
-                Origen: <strong>{pendingSourceDevice.name} / {pendingSourcePort.name}</strong> • Selecciona puerto destino.
+                {t("app.origin")} <strong>{pendingSourceDevice.name} / {pendingSourcePort.name}</strong> {t("app.selectDest")}
               </span>
               <button 
                 onClick={cancelConnectionMapping}
@@ -660,9 +660,7 @@ function App() {
                   className={`btn ${cablingViewMode === 'all' ? 'btn-primary' : 'btn-secondary'}`}
                   style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '4px', border: 'none' }}
                   title="Ver todas las conexiones del Rack"
-                >
-                  Ver Todo
-                </button>
+                >{t("app.viewAll")}</button>
                 <button
                   onClick={() => setCablingViewMode('selected')}
                   className={`btn ${cablingViewMode === 'selected' ? 'btn-primary' : 'btn-secondary'}`}
