@@ -525,7 +525,7 @@ export default function Sidebar() {
                 <Trash2 size={20} color="var(--accent-neon-red)" />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Eliminar Proyecto</h3>
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{t("sidebar.deleteProject")}</h3>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{t("wirelist.cannotUndo")}</span>
               </div>
             </div>
@@ -544,7 +544,7 @@ export default function Sidebar() {
                 }}
                 style={{ background: 'rgba(239,68,68,0.15)', border: '1px solid var(--accent-neon-red)', color: 'var(--accent-neon-red)', display: 'flex', alignItems: 'center', gap: '6px' }}
               >
-                <Trash2 size={14} /> Eliminar Proyecto
+                <Trash2 size={14} /> {t("sidebar.deleteProject")}
               </button>
             </div>
           </div>

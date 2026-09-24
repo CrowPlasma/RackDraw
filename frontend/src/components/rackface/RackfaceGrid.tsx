@@ -666,7 +666,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                           e.stopPropagation();
                           handleOpenEditDevice(device);
                         }}
-                        title="Editar equipo"
+                        title={t("rackface.edit")}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -684,7 +684,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                           justifyContent: 'center',
                         }}
                       >
-                        <Edit3 size={10} /> Editar
+                        <Edit3 size={10} /> {t("rackface.edit")}
                       </button>
                       <button
                         onClick={(e) => {
@@ -709,7 +709,7 @@ ${isConnected ? `Ruta: ${conn?.sourcePort?.device?.name} (${conn?.sourcePort?.na
                           justifyContent: 'center',
                         }}
                       >
-                        <Copy size={10} /> Clonar
+                        <Copy size={10} /> {t("rackface.clone")}
                       </button>
                     </div>
                   )}

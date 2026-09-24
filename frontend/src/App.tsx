@@ -271,7 +271,7 @@ function App() {
               Rack<span style={{ color: 'var(--accent-neon-blue)' }}>Draw</span>
             </h1>
             <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block', marginTop: '-2px' }}>
-              Gestión Inteligente de Racks
+              {t("app.tagline")}
             </span>
           </div>
         </div>
@@ -505,7 +505,7 @@ function App() {
 
           {/* Print Title (Visible only in PDF/Print) */}
           <h2 className="print-only" style={{ fontSize: '1.6rem', fontWeight: 800, borderBottom: '2px solid #000', paddingBottom: '10px', marginBottom: '20px', textAlign: 'center', color: '#0f172a' }}>
-            Distribución Física del Rack (Con Cableado)
+            {t("app.rackLayoutWith")}
           </h2>
 
           <div 
@@ -573,9 +573,9 @@ function App() {
                 margin: 'auto'
               }}>
                 <Cable size={48} color="rgba(128,128,128,0.2)" />
-                <h3 style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Bienvenido a RackDraw</h3>
+                <h3 style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{t("app.welcome")}</h3>
                 <p style={{ fontSize: '0.85rem', lineHeight: '1.6' }}>
-                  Crea o selecciona un proyecto en el menú de la izquierda, luego abre un rack para comenzar a montar y cablear equipos.
+                  {t("app.welcomeMsg")}
                 </p>
               </div>
             )}
@@ -669,7 +669,7 @@ function App() {
                   style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '4px', border: 'none' }}
                   title="Ocultar cables no seleccionados"
                 >
-                  Solo Selección
+                  {t("app.selectionOnly")}
                 </button>
               </div>
             </div>
@@ -804,7 +804,7 @@ function App() {
         <div className="print-report-container">
           {/* PAGE 2 starts here! Since Page 1 is the main screen rack with cables, we trigger a page break at the start of page 2 container */}
           <h2 style={{ fontSize: '1.6rem', fontWeight: 800, borderBottom: '2px solid #000', paddingBottom: '10px', marginBottom: '20px', textAlign: 'center', color: '#1e293b' }}>
-            Distribución Física del Rack (Sin Cableado)
+            {t("app.rackLayoutWithout")}
           </h2>
           
           <div className="print-rack-wrapper" style={{ marginBottom: '40px', overflow: 'visible', pageBreakAfter: 'always' }}>
@@ -812,7 +812,7 @@ function App() {
           </div>
 
           <h2 style={{ fontSize: '1.8rem', fontWeight: 800, borderBottom: '2px solid #000', paddingBottom: '10px', marginBottom: '20px', color: '#0f172a' }}>
-            Memoria Técnica de Infraestructura (RackDraw Report)
+            {t("app.reportTitle")}
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '30px', fontSize: '0.9rem' }}>
             <div>

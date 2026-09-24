@@ -538,7 +538,7 @@ export default function WireListPanel({
                     fontSize: '0.75rem'
                   }}
                 >
-                  Cerrar
+                  {t("wirelist.close")}
                 </button>
               </div>
 
@@ -556,7 +556,7 @@ export default function WireListPanel({
                   className="btn btn-secondary"
                   style={{ width: '100%', marginTop: '8px', gap: '6px', fontSize: '0.8rem', padding: '8px', border: '1px solid var(--border-glass)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
-                  <Edit3 size={14} /> Editar Equipo / Puertos
+                  <Edit3 size={14} /> {t("rackface.editEquipPorts")}
                 </button>
               </div>
             </div>

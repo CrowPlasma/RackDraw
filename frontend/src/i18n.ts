@@ -6,6 +6,7 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Active",
+        "welcome": "Welcome to RackDraw",
         "tagline": "Intelligent Rack Management",
         "printPdf": "Print Technical Report (PDF)",
         "rackLayoutWith": "Physical Rack Layout (With Cabling)",
@@ -162,6 +163,7 @@ const resources = {
     translation: {
       "app": {
         "dockerActive": "Docker Activo",
+        "welcome": "Bienvenido a RackDraw",
         "tagline": "Gestión Inteligente de Racks",
         "printPdf": "Imprimir Memoria Técnica (PDF)",
         "rackLayoutWith": "Distribución Física del Rack (Con Cableado)",
