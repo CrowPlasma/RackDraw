@@ -482,7 +482,7 @@ export default function Sidebar() {
             <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Editar Rack / Gabinete</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre del Rack</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.rackName")}</label>
               <input
                 type="text"
                 required

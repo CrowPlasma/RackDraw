@@ -819,7 +819,7 @@ export default function WireListPanel({
                   <Edit3 size={20} color="#000" />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Editar Equipo: {activeDevice.name}</h3>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700 }}>{t("rackface.editDevice")}: {activeDevice.name}</h3>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.hardwareConfig")}</span>
                 </div>
               </div>
@@ -837,12 +837,12 @@ export default function WireListPanel({
               {/* Left Column: General Info Form */}
               <form onSubmit={handleSaveDeviceDetails} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <h4 style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--accent-neon-blue)', letterSpacing: '0.5px', textTransform: 'uppercase', borderBottom: '1px solid var(--border-glass)', paddingBottom: '6px' }}>
-                  Detalles del Chasis
+                  {t("rackface.chassisDetails")}
                 </h4>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Marca / Fabricante</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.brand")}</label>
                     <input 
                       type="text" 
                       required 
@@ -852,7 +852,7 @@ export default function WireListPanel({
                     />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Nombre de Red</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.networkName")}</label>
                     <input 
                       type="text" 
                       required 
@@ -865,7 +865,7 @@ export default function WireListPanel({
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Modelo</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.model")}</label>
                     <input 
                       type="text" 
                       required 
@@ -900,7 +900,7 @@ export default function WireListPanel({
                     />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Altura (U)</label>
+                    <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.heightU")}</label>
                     <input 
                       type="number" 
                       required 
@@ -914,7 +914,7 @@ export default function WireListPanel({
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '10px' }}>
-                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Color de Tarjeta (Lateral)</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{t("rackface.color")}</label>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <input
                       type="color"
@@ -1012,14 +1012,14 @@ export default function WireListPanel({
                   gap: '10px'
                 }}>
                   <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                    Agregar Nueva Interfaz:
+                    {t("rackface.addNewInterface")}
                   </span>
                   
                   <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '8px' }}>
                     <input 
                       type="text" 
                       className="input-field" 
-                      placeholder="Nombre (ej. Gi1/0/2)" 
+                      placeholder={t("rackface.nameEj")} 
                       value={newPortName}
                       onChange={(e) => setNewPortName(e.target.value)}
                       style={{ padding: '6px 10px', fontSize: '0.78rem' }}
@@ -1054,7 +1054,7 @@ export default function WireListPanel({
                     className="btn btn-secondary"
                     style={{ gap: '6px', fontSize: '0.78rem', padding: '6px 12px', alignSelf: 'flex-end', border: '1px solid var(--border-glass)' }}
                   >
-                    <Plus size={13} /> Agregar Puerto
+                    <Plus size={13} /> {t("rackface.addPort")}
                   </button>
                 </div>
 
