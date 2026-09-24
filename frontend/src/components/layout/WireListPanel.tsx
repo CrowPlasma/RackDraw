@@ -515,7 +515,7 @@ export default function WireListPanel({
         /* 3. General Device Inspector */
         <div style={{ flex: '0 0 auto' }}>
           <h3 style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' }}>
-            Inspector de Dispositivo
+            {t("wirelist.inspector")}
           </h3>
           
           {activeDevice ? (
@@ -562,7 +562,7 @@ export default function WireListPanel({
             </div>
           ) : (
             <div className="glass-panel" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-              Haz clic en un equipo del rack o en un puerto para editar sus conexiones.
+              {t("wirelist.clickToEdit")}
             </div>
           )}
         </div>
@@ -574,8 +574,8 @@ export default function WireListPanel({
           {selectedConnection 
             ? 'Detalle de Enlace' 
             : activeDevice 
-              ? `Cables de ${activeDevice.name}` 
-              : 'Wire List (Cableado Completo)'}
+              ? `${t('wirelist.cablesOf')} ${activeDevice.name}` 
+              : t('wirelist.fullList')}
         </h3>
 
         {/* Search / filter input */}
@@ -706,7 +706,7 @@ export default function WireListPanel({
                     }}>
                       <div style={{ display: 'grid', gridTemplateColumns: '50px 1fr', gap: '8px', alignItems: 'end' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                          <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Color</label>
+                          <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>{t("wirelist.color")}</label>
                           <input
                             type="color"
                             className="input-field"
@@ -728,7 +728,7 @@ export default function WireListPanel({
                         </div>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                        <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>Longitud (m)</label>
+                        <label style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }}>{t("wirelist.lengthM")}</label>
                         <input
                           type="number"
                           min={0.1}

@@ -174,7 +174,7 @@ export default function ConnectionModal({
         {/* Custom fields */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Tipo de Cable</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("connection.cableType")}</label>
             <select
               className="input-field"
               value={cableType}
@@ -210,7 +210,7 @@ export default function ConnectionModal({
 
         <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '12px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Longitud (m)</label>
+            <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("wirelist.lengthM")}</label>
             <input
               type="number"
               required
