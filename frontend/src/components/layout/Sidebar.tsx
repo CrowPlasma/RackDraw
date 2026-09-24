@@ -109,7 +109,7 @@ export default function Sidebar() {
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Proyecto Activo
+            {t("sidebar.activeProject")}
           </span>
           <button 
             onClick={() => setShowProjModal(true)}
@@ -172,7 +172,7 @@ export default function Sidebar() {
                   className="btn btn-secondary"
                   style={{ flex: 1, padding: '6px 12px', fontSize: '0.75rem', gap: '4px', border: '1px solid var(--border-glass)' }}
                 >
-                  <Edit3 size={13} /> Editar Proyecto
+                  <Edit3 size={13} /> {t("sidebar.editProject")}
                 </button>
                 <button
                   onClick={() => {
@@ -181,7 +181,7 @@ export default function Sidebar() {
                   className="btn btn-danger"
                   style={{ padding: '6px 12px', fontSize: '0.75rem', gap: '4px' }}
                 >
-                  <Trash2 size={13} /> Borrar
+                  <Trash2 size={13} /> {t("sidebar.deleteProject")}
                 </button>
               </div>
             )}
@@ -193,7 +193,7 @@ export default function Sidebar() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Racks / Gabinetes
+            {t("sidebar.racks")}
           </span>
           {activeProject && (
             <button 
@@ -215,11 +215,11 @@ export default function Sidebar() {
 
         {!activeProject ? (
           <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic', padding: '10px 0' }}>
-            Selecciona un proyecto para listar racks
+            {t("sidebar.noRacks")}
           </div>
         ) : racks.length === 0 ? (
           <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic', padding: '10px 0' }}>
-            Sin racks en este proyecto. ¡Crea uno!
+            {t("sidebar.noRacks")}
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto' }}>
@@ -259,7 +259,7 @@ export default function Sidebar() {
                                 setShowEditRackModal(true);
                               }}
                               style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '2px', display: 'flex', alignItems: 'center' }}
-                              title="Editar Rack"
+                              title={t("sidebar.editRackTooltip")}
                             >
                               <Edit3 size={13} />
                             </button>
@@ -268,7 +268,7 @@ export default function Sidebar() {
                                 setDeleteRackTarget({ id: r.id, name: r.name });
                               }}
                               style={{ background: 'none', border: 'none', color: 'var(--accent-neon-red)', cursor: 'pointer', padding: '2px', display: 'flex', alignItems: 'center' }}
-                              title="Borrar Rack"
+                              title={t("sidebar.deleteRackTooltip")}
                             >
                               <Trash2 size={13} />
                             </button>
@@ -337,7 +337,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowProjModal(false)}>Cancelar</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowProjModal(false)}>{t("sidebar.cancel")}</button>
               <button type="submit" className="btn btn-primary">{t("sidebar.create")}</button>
             </div>
           </form>
@@ -370,7 +370,7 @@ export default function Sidebar() {
             <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{t("sidebar.createRack")}</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Nombre del Rack</label>
+              <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.rackName")}</label>
               <input
                 type="text"
                 required
@@ -395,7 +395,7 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowRackModal(false)}>Cancelar</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowRackModal(false)}>{t("sidebar.cancel")}</button>
               <button type="submit" className="btn btn-primary">{t("sidebar.createRack")}</button>
             </div>
           </form>
@@ -424,7 +424,7 @@ export default function Sidebar() {
             flexDirection: 'column',
             gap: '16px'
           }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Editar Proyecto</h3>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{t("sidebar.editProject")}</h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t("sidebar.projectName")}</label>
@@ -449,8 +449,8 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowEditProjModal(false)}>Cancelar</button>
-              <button type="submit" className="btn btn-primary">Guardar Cambios</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowEditProjModal(false)}>{t("sidebar.cancel")}</button>
+              <button type="submit" className="btn btn-primary">{t("sidebar.saveChanges")}</button>
             </div>
           </form>
         </div>
@@ -506,8 +506,8 @@ export default function Sidebar() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px' }}>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowEditRackModal(false)}>Cancelar</button>
-              <button type="submit" className="btn btn-primary">Guardar Cambios</button>
+              <button type="button" className="btn btn-secondary" onClick={() => setShowEditRackModal(false)}>{t("sidebar.cancel")}</button>
+              <button type="submit" className="btn btn-primary">{t("sidebar.saveChanges")}</button>
             </div>
           </form>
         </div>
@@ -530,10 +530,10 @@ export default function Sidebar() {
               </div>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-              ¿Estás seguro de eliminar el proyecto <strong style={{ color: 'var(--text-primary)' }}>{deleteProjectTarget.name}</strong>? Se eliminarán permanentemente todos sus racks, equipos y cables.
+              {t("sidebar.deleteProjectMsg")} <strong style={{ color: 'var(--text-primary)' }}>{deleteProjectTarget.name}</strong>
             </p>
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-              <button className="btn btn-secondary" onClick={() => setDeleteProjectTarget(null)}>Cancelar</button>
+              <button className="btn btn-secondary" onClick={() => setDeleteProjectTarget(null)}>{t("sidebar.cancel")}</button>
               <button
                 className="btn"
                 onClick={async () => {
@@ -569,10 +569,10 @@ export default function Sidebar() {
               </div>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-              ¿Estás seguro de eliminar el rack <strong style={{ color: 'var(--text-primary)' }}>{deleteRackTarget.name}</strong>? Se eliminarán todos los equipos montados y sus conexiones.
+              {t("sidebar.confirmDelete")} <strong style={{ color: 'var(--text-primary)' }}>{deleteRackTarget.name}</strong>
             </p>
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-              <button className="btn btn-secondary" onClick={() => setDeleteRackTarget(null)}>Cancelar</button>
+              <button className="btn btn-secondary" onClick={() => setDeleteRackTarget(null)}>{t("sidebar.cancel")}</button>
               <button
                 className="btn"
                 onClick={async () => {

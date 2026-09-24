@@ -31,7 +31,10 @@ const resources = {
         "searchProject": "Search project...",
         "noRacks": "No racks in this project.",
         "deleteProjectConfirm": "Delete Project?",
-        "deleteProjectMsg": "Are you sure you want to delete this project and all its racks?"
+        "deleteProjectMsg": "Are you sure you want to delete this project and all its racks?",
+        "saveChanges": "Save Changes",
+        "editRackTooltip": "Edit Rack",
+        "deleteRackTooltip": "Delete Rack"
       },
       "wirelist": {
         "title": "Wirelist: Connection Table",
@@ -147,7 +150,10 @@ const resources = {
         "searchProject": "Buscar proyecto...",
         "noRacks": "No hay racks en este proyecto.",
         "deleteProjectConfirm": "¿Eliminar Proyecto?",
-        "deleteProjectMsg": "¿Estás seguro de eliminar este proyecto y todos sus racks?"
+        "deleteProjectMsg": "¿Estás seguro de eliminar este proyecto y todos sus racks?",
+        "saveChanges": "Guardar Cambios",
+        "editRackTooltip": "Editar Rack",
+        "deleteRackTooltip": "Borrar Rack"
       },
       "wirelist": {
         "title": "Wirelist: Tabla de Conexiones",

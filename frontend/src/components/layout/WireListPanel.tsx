@@ -583,7 +583,7 @@ export default function WireListPanel({
           <input
             type="text"
             className="input-field"
-            placeholder="🔍 Buscar por equipo, puerto o etiqueta..."
+            placeholder={`🔍 ${t("wirelist.search")}`}
             value={connectionSearch}
             onChange={(e) => setConnectionSearch(e.target.value)}
             style={{ marginBottom: '10px', padding: '6px 10px', fontSize: '0.78rem' }}
