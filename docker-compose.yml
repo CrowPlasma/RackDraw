@@ -27,7 +27,7 @@ services:
       NODE_ENV: production
       PORT: 3000
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-rackdraw_db_2024!}@db:5432/rackdraw?schema=public
-      CORS_ORIGIN: http://${VPS_HOST:-localhost}
+      CORS_ORIGIN: " *\
     depends_on:
       db:
         condition: service_healthy
