@@ -18,6 +18,10 @@
 
 Ya sea que gestiones un pequeño site de telecomunicaciones o un centro de datos con múltiples racks, RackDraw cierra la brecha entre las hojas de cálculo desordenadas y el costoso software DCIM empresarial, ofreciendo una herramienta de documentación rápida, intuitiva y fácil de exportar.
 
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/67d8074f-57b8-4c8c-a5e2-8f75658f5f04" />
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/c5213ce2-bff3-4a06-9071-c5ef556fbc55" />
+
+
 ### ✨ Características Principales
 
 - 🏗️ **Constructor Visual de Racks** — Lienzo interactivo para montar, mover y organizar hardware IT dentro de los gabinetes. Se adapta a diferentes alturas y necesidades de infraestructura, no está limitado a estándares fijos.
@@ -69,6 +73,10 @@ Este proyecto está licenciado bajo la **Licencia Pública General de GNU v3.0 (
 **RackDraw** is a modern, browser-based platform designed for network engineers, system administrators, and datacenter technicians. It provides a visual, highly interactive environment to document server cabinets, plan hardware deployments, and trace physical port-to-port connections. 
 
 Whether you are managing a small MDF closet or a multi-rack datacenter, RackDraw bridges the gap between messy spreadsheets and expensive enterprise DCIM (Data Center Infrastructure Management) software by offering a fast, intuitive, and exportable documentation tool.
+
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/f08347bb-deb2-4751-82c2-e44cafbed166" />
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/d1947e16-dc39-4a64-a33b-5e89b9e7ad41" />
+
 
 ### ✨ Key Features
 
