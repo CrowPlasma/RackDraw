@@ -2,6 +2,7 @@
   "name": "rackdraw-backend",
   "version": "1.0.0",
   "description": "Backend API for RackDraw",
+  "license": "GPL-3.0-or-later",
   "main": "dist/app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",

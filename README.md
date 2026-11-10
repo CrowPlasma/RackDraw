@@ -1,6 +1,58 @@
 # RackDraw 🔌
 
-*Read this in other languages: [English](#english) | [Español](#español)*
+*Leer en otros idiomas: [Español](#español) | [English](#english)*
+
+---
+
+<a id="español"></a>
+## 🇪🇸 Español
+
+> **Plataforma Profesional de Gestión Visual de Racks e Infraestructura TI**
+
+[![Licencia: GPL v3](https://img.shields.io/badge/Licencia-GPLv3-blue.svg)](LICENSE)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)
+![React](https://img.shields.io/badge/React-18-61DAFB.svg)
+
+**RackDraw** es una plataforma moderna para navegador diseñada para ingenieros de red, administradores de sistemas y técnicos de centros de datos. Proporciona un entorno visual y altamente interactivo para documentar gabinetes de servidores, planificar despliegues de hardware y trazar conexiones físicas puerto a puerto.
+
+Ya sea que gestiones un pequeño site de telecomunicaciones o un centro de datos con múltiples racks, RackDraw cierra la brecha entre las hojas de cálculo desordenadas y el costoso software DCIM empresarial, ofreciendo una herramienta de documentación rápida, intuitiva y fácil de exportar.
+
+### ✨ Características Principales
+
+- 🏗️ **Constructor Visual de Racks** — Lienzo interactivo para montar, mover y organizar hardware IT dentro de los gabinetes. Se adapta a diferentes alturas y necesidades de infraestructura, no está limitado a estándares fijos.
+- 🗄️ **Vista Multi-Rack y Parcheo Inter-Rack** — Visualiza todos los gabinetes de un proyecto lado a lado en un lienzo infinito. Conecta y traza rutas de cableado físico entre diferentes racks de forma fluida con canales inter-rack dedicados.
+- 🔌 **Cableado Preciso Puerto-a-Puerto** — Traza conexiones físicas hasta la interfaz específica. Diferencia los medios físicos de forma nativa: **Cobre (CAT6/6a)**, **Fibra (Monomodo / Multimodo)** y **Líneas de Energía**, cada uno con su código de color y lógica de enrutamiento.
+- 👁️ **Modo Solo Lectura vs. Modo Edición** — Bloquea la interfaz en modo de solo vista con un solo clic para evitar movimientos accidentales de hardware, desmonte de slots o desconexión de cables durante auditorías en campo o revisiones en tablets.
+- 📋 **WireList en Vivo (Inventario de Cables)** — Genera automáticamente una bitácora de cableado en tiempo real a medida que conectas los dispositivos visualmente. Filtra, busca y audita cables fácilmente.
+- 📄 **Memorias Técnicas (PDF y CSV)** — Genera al instante Reportes Técnicos en PDF listos para impresión para los técnicos en campo, o exporta la matriz completa de conexiones a CSV/Excel.
+- 🏢 **Gestión Multi-Proyecto** — Organiza múltiples sitios, pisos o centros de datos en Proyectos separados, cada uno con múltiples racks.
+- 🌍 **Multilenguaje y Temas** — Soporte nativo y fluido entre Español e Inglés, además de un diseño adaptativo con Modo Claro y Oscuro.
+- 🐳 **Auto-alojado y Listo para Docker** — Stack completo (React, Node.js, PostgreSQL) en contenedores para un despliegue instantáneo mediante Docker Compose.
+
+### 🛠️ Tecnologías
+* **Frontend:** React 18, Vite, TypeScript, Zustand, Lucide Icons, i18next
+* **Backend:** Node.js, Express, TypeScript, Prisma ORM
+* **Base de Datos:** PostgreSQL 16
+* **Despliegue:** Docker, Docker Compose
+
+### 🚀 Inicio Rápido (Desarrollo Local y Docker)
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/CrowPlasma/RackDraw.git
+cd RackDraw
+
+# 2. Configurar variables de entorno
+cp .env.example .env
+
+# 3. Levantar los contenedores
+docker compose up --build
+```
+* **Interfaz Frontend:** `http://localhost:5173`
+* **API Backend:** `http://localhost:3000`
+
+### 📄 Licencia
+Este proyecto está licenciado bajo la **Licencia Pública General de GNU v3.0 (GPLv3)**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
 
@@ -9,7 +61,7 @@
 
 > **Professional IT Infrastructure & Visual Rack Management Platform**
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)
 ![React](https://img.shields.io/badge/React-18-61DAFB.svg)
@@ -51,51 +103,5 @@ docker compose up --build
 * **Frontend UI:** `http://localhost:5173`
 * **Backend API:** `http://localhost:3000`
 
----
-
-<a id="español"></a>
-## 🇪🇸 Español
-
-> **Plataforma Profesional de Gestión Visual de Racks e Infraestructura TI**
-
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Docker](https://img.shields.io/badge/Docker-ready-2496ED.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6.svg)
-![React](https://img.shields.io/badge/React-18-61DAFB.svg)
-
-**RackDraw** es una plataforma moderna para navegador diseñada para ingenieros de red, administradores de sistemas y técnicos de centros de datos. Proporciona un entorno visual y altamente interactivo para documentar gabinetes de servidores, planificar despliegues de hardware y trazar conexiones físicas puerto a puerto.
-
-Ya sea que gestiones un pequeño site de telecomunicaciones o un centro de datos con múltiples racks, RackDraw cierra la brecha entre las hojas de cálculo desordenadas y el costoso software DCIM empresarial, ofreciendo una herramienta de documentación rápida, intuitiva y fácil de exportar.
-
-### ✨ Características Principales
-
-- 🏗️ **Constructor Visual de Racks** — Lienzo interactivo para montar, mover y organizar hardware IT dentro de los gabinetes. Se adapta a diferentes alturas y necesidades de infraestructura, no está limitado a estándares fijos.
-- 🗄️ **Vista Multi-Rack y Parcheo Inter-Rack** — Visualiza todos los gabinetes de un proyecto lado a lado en un lienzo infinito. Conecta y traza rutas de cableado físico entre diferentes racks de forma fluida con canales inter-rack dedicados.
-- 🔌 **Cableado Preciso Puerto-a-Puerto** — Traza conexiones físicas hasta la interfaz específica. Diferencia los medios físicos de forma nativa: **Cobre (CAT6/6a)**, **Fibra (Monomodo / Multimodo)** y **Líneas de Energía**, cada uno con su código de color y lógica de enrutamiento.
-- 👁️ **Modo Solo Lectura vs. Modo Edición** — Bloquea la interfaz en modo de solo vista con un solo clic para evitar movimientos accidentales de hardware, desmonte de slots o desconexión de cables durante auditorías en campo o revisiones en tablets.
-- 📋 **WireList en Vivo (Inventario de Cables)** — Genera automáticamente una bitácora de cableado en tiempo real a medida que conectas los dispositivos visualmente. Filtra, busca y audita cables fácilmente.
-- 📄 **Memorias Técnicas (PDF y CSV)** — Genera al instante Reportes Técnicos en PDF listos para impresión para los técnicos en campo, o exporta la matriz completa de conexiones a CSV/Excel.
-- 🏢 **Gestión Multi-Proyecto** — Organiza múltiples sitios, pisos o centros de datos en Proyectos separados, cada uno con múltiples racks.
-- 🌍 **Multilenguaje y Temas** — Soporte nativo y fluido entre Inglés y Español, además de un diseño adaptativo con Modo Claro y Oscuro.
-- 🐳 **Auto-alojado y Listo para Docker** — Stack completo (React, Node.js, PostgreSQL) en contenedores para un despliegue instantáneo mediante Docker Compose.
-
-### 🛠️ Tecnologías
-* **Frontend:** React 18, Vite, TypeScript, Zustand, Lucide Icons, i18next
-* **Backend:** Node.js, Express, TypeScript, Prisma ORM
-* **Base de Datos:** PostgreSQL 16
-* **Despliegue:** Docker, Docker Compose
-
-### 🚀 Inicio Rápido (Desarrollo Local)
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/CrowPlasma/RackDraw.git
-cd RackDraw
-
-# 2. Configurar variables de entorno
-cp .env.example .env
-
-# 3. Levantar los contenedores
-docker compose up --build
-```
-* **Interfaz Frontend:** `http://localhost:5173`
-* **API Backend:** `http://localhost:3000`
+### 📄 License
+This project is licensed under the **GNU General Public License v3.0 (GPLv3)**. See the [LICENSE](LICENSE) file for details.
