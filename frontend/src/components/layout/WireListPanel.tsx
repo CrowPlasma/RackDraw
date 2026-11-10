@@ -26,6 +26,9 @@ export default function WireListPanel({
     updateConnection,
     setActiveDevice,
     rackDetails,
+    racks,
+    isMultiRackView,
+    isViewOnly,
     updateDevice,
     addPort,
     deletePort,
@@ -220,9 +223,11 @@ export default function WireListPanel({
     }
   };
 
-  const deviceOptions = rackDetails.devices || [];
-  const chosenDestDevice = rackDetails.devices?.find((d) => d.id === editDestDeviceId);
-  const chosenSourceDevice = rackDetails.devices?.find((d) => d.id === editSourceDeviceId);
+  const deviceOptions = isMultiRackView
+    ? racks.flatMap((r) => (r.devices || []).map((d) => ({ ...d, rack: r })))
+    : (rackDetails.devices || []);
+  const chosenDestDevice = deviceOptions.find((d) => d.id === editDestDeviceId);
+  const chosenSourceDevice = deviceOptions.find((d) => d.id === editSourceDeviceId);
 
   const handleUpdateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -284,18 +289,19 @@ export default function WireListPanel({
               <select
                 className="input-field"
                 value={editSourceDeviceId}
+                disabled={isViewOnly}
                 onChange={(e) => {
                   const devId = e.target.value;
                   setEditSourceDeviceId(devId);
-                  const nextDev = rackDetails.devices?.find((d) => d.id === devId);
+                  const nextDev = deviceOptions.find((d) => d.id === devId);
                   const firstAvail = (nextDev?.ports || []).find((p) => !occupiedPortIds.has(p.id) || p.id === selectedConnection.sourcePortId);
                   setEditSourcePortId(firstAvail ? firstAvail.id : '');
                 }}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: isViewOnly ? 'default' : 'pointer' }}
               >
                 {(deviceOptions || []).map((d) => (
                   <option key={d.id} value={d.id}>
-                    {d.name} ({d.model})
+                    {d.rack ? `[${d.rack.name}] ` : ''}{d.name} ({d.model})
                   </option>
                 ))}
               </select>
@@ -310,8 +316,8 @@ export default function WireListPanel({
                 className="input-field"
                 value={editSourcePortId}
                 onChange={(e) => setEditSourcePortId(e.target.value)}
-                disabled={!editSourceDeviceId}
-                style={{ cursor: 'pointer' }}
+                disabled={!editSourceDeviceId || isViewOnly}
+                style={{ cursor: isViewOnly ? 'default' : 'pointer' }}
               >
                 {(chosenSourceDevice?.ports || []).map((p) => {
                   const isAvailable = !occupiedPortIds.has(p.id) || p.id === selectedConnection.sourcePortId;
@@ -332,18 +338,19 @@ export default function WireListPanel({
               <select
                 className="input-field"
                 value={editDestDeviceId}
+                disabled={isViewOnly}
                 onChange={(e) => {
                   const devId = e.target.value;
                   setEditDestDeviceId(devId);
-                  const nextDev = rackDetails.devices?.find((d) => d.id === devId);
+                  const nextDev = deviceOptions.find((d) => d.id === devId);
                   const firstAvail = (nextDev?.ports || []).find((p) => !occupiedPortIds.has(p.id));
                   setEditDestPortId(firstAvail ? firstAvail.id : '');
                 }}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: isViewOnly ? 'default' : 'pointer' }}
               >
                 {(deviceOptions || []).map((d) => (
                   <option key={d.id} value={d.id}>
-                    {d.name} ({d.model})
+                    {d.rack ? `[${d.rack.name}] ` : ''}{d.name} ({d.model})
                   </option>
                 ))}
               </select>
@@ -358,8 +365,8 @@ export default function WireListPanel({
                 className="input-field"
                 value={editDestPortId}
                 onChange={(e) => setEditDestPortId(e.target.value)}
-                disabled={!editDestDeviceId}
-                style={{ cursor: 'pointer' }}
+                disabled={!editDestDeviceId || isViewOnly}
+                style={{ cursor: isViewOnly ? 'default' : 'pointer' }}
               >
                 {(chosenDestDevice?.ports || []).map((p) => {
                   const isAvailable = !occupiedPortIds.has(p.id) || p.id === selectedConnection.destPortId;
@@ -427,23 +434,25 @@ export default function WireListPanel({
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '6px' }}>
-              <button
-                type="button"
-                className="btn btn-danger"
-                style={{ padding: '8px', fontSize: '0.8rem', gap: '4px' }}
-                onClick={() => handleRequestDeleteCable(selectedConnection)}
-              >
-                <Trash2 size={13} /> Retirar
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ padding: '8px', fontSize: '0.8rem', gap: '4px' }}
-              >
-                <Save size={13} /> {t("wirelist.save")}
-              </button>
-            </div>
+            {!isViewOnly && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '6px' }}>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  style={{ padding: '8px', fontSize: '0.8rem', gap: '4px' }}
+                  onClick={() => handleRequestDeleteCable(selectedConnection)}
+                >
+                  <Trash2 size={13} /> {t("connection.remove")}
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ padding: '8px', fontSize: '0.8rem', gap: '4px' }}
+                >
+                  <Save size={13} /> {t("wirelist.save")}
+                </button>
+              </div>
+            )}
           </form>
         </div>
       ) : selectedPort && selectedPortDevice ? (
@@ -502,13 +511,15 @@ export default function WireListPanel({
               </div>
             </div>
 
-            <button
-              onClick={() => onStartCabling(selectedPort, selectedPortDevice)}
-              className="btn btn-primary"
-              style={{ width: '100%', gap: '6px', fontSize: '0.8rem', padding: '8px' }}
-            >
-              <Link2 size={14} /> {t("wirelist.startCabling")}
-            </button>
+            {!isViewOnly && (
+              <button
+                onClick={() => onStartCabling(selectedPort, selectedPortDevice)}
+                className="btn btn-primary"
+                style={{ width: '100%', gap: '6px', fontSize: '0.8rem', padding: '8px' }}
+              >
+                <Link2 size={14} /> {t("wirelist.startCabling")}
+              </button>
+            )}
           </div>
         </div>
       ) : (
@@ -551,13 +562,15 @@ export default function WireListPanel({
                   <span style={{ color: 'var(--text-muted)' }}>{t("rackface.locationU")}</span>
                   <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Slot {activeDevice.positionU} ({activeDevice.heightU}U)</span>
                 </div>
-                <button
-                  onClick={handleOpenEdit}
-                  className="btn btn-secondary"
-                  style={{ width: '100%', marginTop: '8px', gap: '6px', fontSize: '0.8rem', padding: '8px', border: '1px solid var(--border-glass)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                  <Edit3 size={14} /> {t("rackface.editEquipPorts")}
-                </button>
+                {!isViewOnly && (
+                  <button
+                    onClick={handleOpenEdit}
+                    className="btn btn-secondary"
+                    style={{ width: '100%', marginTop: '8px', gap: '6px', fontSize: '0.8rem', padding: '8px', border: '1px solid var(--border-glass)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    <Edit3 size={14} /> {t("rackface.editEquipPorts")}
+                  </button>
+                )}
               </div>
             </div>
           ) : (
@@ -619,14 +632,16 @@ export default function WireListPanel({
             if (filteredList.length === 0) {
               return (
                 <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem', border: '1px dashed var(--border-glass)', borderRadius: 'var(--radius-sm)' }}>
-                  {searchTerm ? '{t("wirelist.noResults")}' : '{t("wirelist.noCables")}'}
+                  {searchTerm ? t("wirelist.noResults") : t("wirelist.noCables")}
                 </div>
               );
             }
 
             return filteredList.map((conn) => {
-              const srcDevName = conn.sourcePort?.device?.name || 'Puerto Origen';
-              const destDevName = conn.destPort?.device?.name || 'Puerto Destino';
+              const srcRackPrefix = conn.sourcePort?.device?.rack && isMultiRackView ? `[${conn.sourcePort.device.rack.name}] ` : '';
+              const destRackPrefix = conn.destPort?.device?.rack && isMultiRackView ? `[${conn.destPort.device.rack.name}] ` : '';
+              const srcDevName = `${srcRackPrefix}${conn.sourcePort?.device?.name || 'Puerto Origen'}`;
+              const destDevName = `${destRackPrefix}${conn.destPort?.device?.name || 'Puerto Destino'}`;
               const srcPortName = conn.sourcePort?.name || 'Source';
               const destPortName = conn.destPort?.name || 'Dest';
               const isEditing = editingConnectionId === conn.id;
@@ -653,12 +668,12 @@ export default function WireListPanel({
                     <span style={{ fontWeight: 600, color: conn.cableColor, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.5px' }}>
                       {getCableTypeName(conn.cableType)} • {conn.lengthMeters}m
                     </span>
-                    {!selectedConnection && (
+                    {!selectedConnection && !isViewOnly && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         {/* Edit button */}
                         <button
                           onClick={() => isEditing ? setEditingConnectionId(null) : handleOpenEditConnection(conn)}
-                          title={isEditing ? '{t("wirelist.cancelEdit")}' : '{t("wirelist.editCable")}'}
+                          title={isEditing ? t("wirelist.cancelEdit") : t("wirelist.editCable")}
                           style={{
                             background: isEditing ? 'rgba(56,189,248,0.12)' : 'none',
                             border: isEditing ? '1px solid var(--accent-neon-blue)' : 'none',

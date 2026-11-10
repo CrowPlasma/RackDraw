@@ -39,13 +39,19 @@ const resources = {
         "projectDesc": "Project Description:",
         "issueDate": "Issue Date:",
         "exportCSV": "Export (CSV)",
-        "generateReport": "Generate Report"
+        "generateReport": "Generate Report",
+        "multiRackView": "Multi-Rack",
+        "singleRackView": "Single Rack",
+        "viewModeOnly": "View Only",
+        "editMode": "Edit Mode",
+        "viewOnlyBanner": "View-Only Mode Active — Editing, moving, and deleting are disabled."
       },
       "sidebar": {
         "activeProject": "ACTIVE PROJECT",
         "editProject": "Edit Project",
         "deleteProject": "Delete",
         "racks": "RACKS / CABINETS",
+        "multiRackHint": "Showing all project cabinets side-by-side",
         "addRackBtn": "Add Rack",
         "rackManagement": "Rack Management",
         "availableRacks": "Available Racks",
@@ -185,7 +191,12 @@ const resources = {
         "mountInU": "Mount in U",
         "sizeU": "Size (U Units)",
         "confirmDeleteQ": "Delete",
-        "confirmDeleteSub": "? All its cable connections will also be removed."
+        "confirmDeleteSub": "? All its cable connections will also be removed.",
+        "statusPrefix": "Status: ",
+        "connectedVia": "Connected via ",
+        "noTag": "no tag",
+        "available": "Available",
+        "route": "Route: "
       }
     }
   },
@@ -226,13 +237,19 @@ const resources = {
         "projectDesc": "Descripción del Proyecto:",
         "issueDate": "Fecha de Emisión:",
         "exportCSV": "Exportar (CSV)",
-        "generateReport": "Generar Reporte"
+        "generateReport": "Generar Reporte",
+        "multiRackView": "Multi-Rack",
+        "singleRackView": "Vista Individual",
+        "viewModeOnly": "Solo Vista",
+        "editMode": "Modo Edición",
+        "viewOnlyBanner": "Modo Solo Lectura Activo — La edición, movimiento y eliminación están bloqueados."
       },
       "sidebar": {
         "activeProject": "PROYECTO ACTIVO",
         "editProject": "Editar Proyecto",
         "deleteProject": "Borrar",
         "racks": "RACKS / GABINETES",
+        "multiRackHint": "Mostrando todos los gabinetes lado a lado",
         "addRackBtn": "Añadir Gabinete",
         "rackManagement": "Gestión de Gabinetes",
         "availableRacks": "Racks Disponibles",
@@ -372,7 +389,12 @@ const resources = {
         "mountInU": "Montar en U",
         "sizeU": "Tamaño (Unidades U)",
         "confirmDeleteQ": "¿Eliminar",
-        "confirmDeleteSub": "? Se eliminarán también todas sus conexiones de cableado."
+        "confirmDeleteSub": "? Se eliminarán también todas sus conexiones de cableado.",
+        "statusPrefix": "Estado: ",
+        "connectedVia": "Conectado vía ",
+        "noTag": "sin etiqueta",
+        "available": "Disponible",
+        "route": "Ruta: "
       }
     }
   }

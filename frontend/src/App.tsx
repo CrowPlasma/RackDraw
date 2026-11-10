@@ -5,12 +5,28 @@ import CablingOverlay from './components/canvas/CablingOverlay';
 import WireListPanel from './components/layout/WireListPanel';
 import ConnectionModal from './components/ui/ConnectionModal';
 import { useRackStore, Port, Device, Connection } from './store/useRackStore';
-import { Cable, RefreshCw, Info, Sun, Moon, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Printer, Download, Globe } from 'lucide-react';
+import { Cable, RefreshCw, Info, Sun, Moon, X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Printer, Download, Globe, Columns, Eye, Edit3 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 function App() {
   const { t, i18n } = useTranslation();
-  const { rackDetails, activeRack, isLoading, error, toasts, dismissToast, wirelist, setActiveDevice, activeProject, showToast } = useRackStore();
+  const {
+    rackDetails,
+    activeRack,
+    racks,
+    isMultiRackView,
+    setMultiRackView,
+    isViewOnly,
+    setViewOnly,
+    isLoading,
+    error,
+    toasts,
+    dismissToast,
+    wirelist,
+    setActiveDevice,
+    activeProject,
+    showToast
+  } = useRackStore();
 
   // Connection mapping state (Packet Tracer style)
   const [pendingSourcePort, setPendingSourcePort] = useState<Port | null>(null);
@@ -168,7 +184,7 @@ function App() {
       (c) => c.sourcePortId === port.id || c.destPortId === port.id
     );
 
-    if (pendingSourcePort && pendingSourceDevice) {
+    if (!isViewOnly && pendingSourcePort && pendingSourceDevice) {
       if (port.id === pendingSourcePort.id) {
         cancelConnectionMapping();
       } else {
@@ -191,6 +207,7 @@ function App() {
   };
 
   const startCablingFromPort = (port: Port, device: Device) => {
+    if (isViewOnly) return;
     setSelectedConnection(null);
     setPendingSourcePort(port);
     setPendingSourceDevice(device);
@@ -219,8 +236,19 @@ function App() {
   };
 
   const getRackEstimatedHeight = () => {
+    if (isMultiRackView && racks.length > 0) {
+      const maxU = Math.max(...racks.map((r) => r.heightU || 42));
+      return maxU * 64 + 600;
+    }
     if (!rackDetails) return 2200;
     return rackDetails.heightU * 64 + 600; // Increased to prevent bottom PDU cables from being cut off by SVG container boundary
+  };
+
+  const getRackEstimatedWidth = () => {
+    if (isMultiRackView && racks.length > 0) {
+      return Math.max(1500, racks.length * 1450 + 200);
+    }
+    return 1500;
   };
 
   const clearAllSelections = () => {
@@ -330,6 +358,55 @@ function App() {
             }}></span>
             <span style={{ color: 'var(--text-secondary)' }}>{t('app.dockerActive')}</span>
           </div>
+
+          {activeProject && racks.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Multi-Rack Toggle */}
+              <button
+                onClick={() => setMultiRackView(!isMultiRackView)}
+                className={`btn ${isMultiRackView ? 'btn-primary' : 'btn-secondary'}`}
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.8rem',
+                  border: isMultiRackView ? 'none' : '1px solid var(--border-glass)',
+                }}
+                title="Alternar Vista Multi-Rack / Inter-Rack Cabling"
+              >
+                <Columns size={16} />
+                {isMultiRackView ? t('app.multiRackView') : t('app.singleRackView')}
+              </button>
+
+              {/* View-Only vs Edit Mode Toggle */}
+              <button
+                onClick={() => {
+                  const nextMode = !isViewOnly;
+                  setViewOnly(nextMode);
+                  if (nextMode) cancelConnectionMapping();
+                }}
+                className="btn btn-secondary"
+                style={{
+                  padding: '8px 12px',
+                  borderRadius: 'var(--radius-sm)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.8rem',
+                  border: isViewOnly ? '1px solid var(--accent-neon-yellow)' : '1px solid var(--border-glass)',
+                  backgroundColor: isViewOnly ? 'rgba(234, 179, 8, 0.15)' : undefined,
+                  color: isViewOnly ? 'var(--accent-neon-yellow)' : 'var(--text-primary)',
+                  fontWeight: 600,
+                }}
+                title="Alternar Modo Lectura / Modo Edición"
+              >
+                {isViewOnly ? <Eye size={16} /> : <Edit3 size={16} />}
+                {isViewOnly ? t('app.viewModeOnly') : t('app.editMode')}
+              </button>
+            </div>
+          )}
 
           {activeRack && (
             <>
@@ -503,6 +580,25 @@ function App() {
             </div>
           )}
 
+          {isViewOnly && (
+            <div className="no-print" style={{
+              backgroundColor: 'rgba(234, 179, 8, 0.1)',
+              border: '1px solid rgba(234, 179, 8, 0.35)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '8px 16px',
+              color: 'var(--accent-neon-yellow)',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              marginBottom: '12px',
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <Eye size={15} /> {t("app.viewOnlyBanner")}
+            </div>
+          )}
+
           {/* Print Title (Visible only in PDF/Print) */}
           <h2 className="print-only" style={{ fontSize: '1.6rem', fontWeight: 800, borderBottom: '2px solid #000', paddingBottom: '10px', marginBottom: '20px', textAlign: 'center', color: '#0f172a' }}>
             {t("app.rackLayoutWith")}
@@ -529,7 +625,7 @@ function App() {
               <div 
                 className="rack-scroll-wrapper"
                 style={{
-                  width: `${1500 * scale}px`,
+                  width: `${getRackEstimatedWidth() * scale}px`,
                   height: `${getRackEstimatedHeight() * scale}px`,
                   margin: '0 auto',
                   overflow: 'visible',
@@ -539,18 +635,33 @@ function App() {
                   id="rack-content-wrapper"
                   style={{
                     position: 'relative', 
-                    width: '1500px',
+                    width: `${getRackEstimatedWidth()}px`,
                     height: `${getRackEstimatedHeight()}px`,
                     transform: `scale(${scale})`,
                     transformOrigin: 'top left',
                     transition: 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)',
                   }}
                 >
-                  <RackfaceGrid 
-                    onPortClick={handlePortClick}
-                    pendingSourcePort={pendingSourcePort}
-                    selectedPort={selectedPort}
-                  />
+                  {isMultiRackView ? (
+                    <div style={{ display: 'flex', flexDirection: 'row', gap: '340px', alignItems: 'flex-start' }}>
+                      {racks.map((r) => (
+                        <div key={r.id} style={{ width: '1100px', flexShrink: 0 }}>
+                          <RackfaceGrid
+                            rack={r}
+                            onPortClick={handlePortClick}
+                            pendingSourcePort={pendingSourcePort}
+                            selectedPort={selectedPort}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <RackfaceGrid 
+                      onPortClick={handlePortClick}
+                      pendingSourcePort={pendingSourcePort}
+                      selectedPort={selectedPort}
+                    />
+                  )}
                   
                   {/* Cables render layer */}
                   <CablingOverlay 

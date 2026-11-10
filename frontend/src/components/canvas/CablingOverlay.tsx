@@ -23,7 +23,7 @@ interface CablingOverlayProps {
 }
 
 export default function CablingOverlay({ scale, cablingViewMode, selectedConnectionId }: CablingOverlayProps) {
-  const { wirelist, activeDevice } = useRackStore();
+  const { wirelist, activeDevice, isMultiRackView, racks } = useRackStore();
   const [paths, setPaths] = useState<CablePath[]>([]);
   const [isPrinting, setIsPrinting] = useState(false);
 
@@ -84,15 +84,20 @@ export default function CablingOverlay({ scale, cablingViewMode, selectedConnect
     const wrapper = document.getElementById('rack-content-wrapper');
     if (!wrapper) return;
 
-    const table = document.getElementById('rack-table') || document.getElementById('rack-table-print');
-    if (!table) return;
+    const tables = Array.from(wrapper.querySelectorAll('.rack-table-instance')) as HTMLElement[];
+    if (tables.length === 0) return;
 
     const wrapperRect = wrapper.getBoundingClientRect();
-    const tableRect = table.getBoundingClientRect();
 
-    // Table right edge relative to wrapper (unscaled)
-    const tableRight = (tableRect.right - wrapperRect.left) / scale;
-    const runwayStart = tableRight + 24;
+    // Map each rack's right edge relative to wrapper (unscaled)
+    const rackRightMap = new Map<string, number>();
+    let defaultRight = 1080;
+    tables.forEach((tbl) => {
+      const rId = tbl.getAttribute('data-rack-id');
+      const rightEdge = (tbl.getBoundingClientRect().right - wrapperRect.left) / scale;
+      if (rId) rackRightMap.set(rId, rightEdge);
+      defaultRight = Math.max(defaultRight, rightEdge);
+    });
 
     const newPaths: CablePath[] = [];
 
@@ -109,6 +114,12 @@ export default function CablingOverlay({ scale, cablingViewMode, selectedConnect
         // Structured bezel routing calculations
         const y_border1 = getPortBezelY(srcPos.el, y1);
         const y_border2 = getPortBezelY(destPos.el, y2);
+
+        // Determine which rack's runway channel to use
+        const srcRackTable = srcPos.el.closest('.rack-table-instance') as HTMLElement | null;
+        const srcRackId = srcRackTable?.getAttribute('data-rack-id') || conn.sourcePort?.device?.rackId || '';
+        const baseRight = rackRightMap.get(srcRackId) ?? defaultRight;
+        const runwayStart = baseRight + 24;
 
         // Dynamic cabling channel runway starts outside the rack frame.
         const channelX = runwayStart + ((index % 120) * 1.8);
@@ -197,8 +208,8 @@ export default function CablingOverlay({ scale, cablingViewMode, selectedConnect
     });
 
     observer.observe(document.body);
-    const table = document.getElementById('rack-table');
-    if (table) observer.observe(table);
+    const tables = document.querySelectorAll('.rack-table-instance');
+    tables.forEach((t) => observer.observe(t));
 
     // Setup an interval to repeatedly poll for coordinates for the first 3 seconds
     // to handle dynamic browser repaint/CSS scale settling.
@@ -216,12 +227,12 @@ export default function CablingOverlay({ scale, cablingViewMode, selectedConnect
       window.removeEventListener('resize', calculatePositions);
       clearInterval(interval);
     };
-  }, [wirelist, activeDevice, scale, cablingViewMode, selectedConnectionId, isPrinting]);
+  }, [wirelist, activeDevice, scale, cablingViewMode, selectedConnectionId, isPrinting, isMultiRackView, racks]);
 
   useEffect(() => {
     const animationFrame = requestAnimationFrame(calculatePositions);
     return () => cancelAnimationFrame(animationFrame);
-  }, [activeDevice, scale, cablingViewMode, selectedConnectionId, isPrinting]);
+  }, [activeDevice, scale, cablingViewMode, selectedConnectionId, isPrinting, isMultiRackView, racks]);
 
   return (
     <svg

@@ -19,6 +19,8 @@ export default function Sidebar() {
     createRack,
     updateRack,
     deleteRack,
+    isViewOnly,
+    isMultiRackView,
   } = useRackStore();
 
   const [showProjModal, setShowProjModal] = useState(false);
@@ -111,20 +113,22 @@ export default function Sidebar() {
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
             {t("sidebar.activeProject")}
           </span>
-          <button 
-            onClick={() => setShowProjModal(true)}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--accent-neon-blue)',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              padding: '4px'
-            }}
-          >
-            <Plus size={16} />
-          </button>
+          {!isViewOnly && (
+            <button 
+              onClick={() => setShowProjModal(true)}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--accent-neon-blue)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '4px'
+              }}
+            >
+              <Plus size={16} />
+            </button>
+          )}
         </div>
 
         {projects.length === 0 ? (
@@ -161,7 +165,7 @@ export default function Sidebar() {
               <ChevronDown size={16} style={{ position: 'absolute', right: '14px', top: '13px', pointerEvents: 'none', color: 'var(--text-secondary)' }} />
             </div>
 
-            {activeProject && (
+            {activeProject && !isViewOnly && (
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button
                   onClick={() => {
@@ -195,7 +199,7 @@ export default function Sidebar() {
           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '1px', textTransform: 'uppercase' }}>
             {t("sidebar.racks")}
           </span>
-          {activeProject && (
+          {activeProject && !isViewOnly && (
             <button 
               onClick={() => setShowRackModal(true)}
               style={{
@@ -223,8 +227,21 @@ export default function Sidebar() {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto' }}>
+            {isMultiRackView && (
+              <div style={{
+                fontSize: '0.72rem',
+                color: 'var(--accent-neon-blue)',
+                backgroundColor: 'rgba(56, 189, 248, 0.08)',
+                border: '1px dashed rgba(56, 189, 248, 0.35)',
+                borderRadius: '4px',
+                padding: '6px 10px',
+                marginBottom: '2px',
+              }}>
+                ✨ {t("sidebar.multiRackHint")}
+              </div>
+            )}
             {racks.map((r) => {
-              const isActive = activeRack?.id === r.id;
+              const isActive = isMultiRackView ? true : activeRack?.id === r.id;
               return (
                 <div
                   key={r.id}
@@ -249,7 +266,7 @@ export default function Sidebar() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span>{r.name}</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        {isActive && (
+                        {!isViewOnly && (isActive || isMultiRackView) && (
                           <div style={{ display: 'flex', gap: '4px' }} onClick={(e) => e.stopPropagation()}>
                             <button
                               onClick={() => {

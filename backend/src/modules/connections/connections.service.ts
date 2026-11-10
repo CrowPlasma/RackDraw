@@ -30,6 +30,11 @@ export class ConnectionsService {
     return this.repository.getByRackId(rackId);
   }
 
+  async getProjectWireList(projectId: string) {
+    if (!projectId) throw new Error('Project ID is required');
+    return this.repository.getByProjectId(projectId);
+  }
+
   async createConnection(data: {
     sourcePortId: string;
     destPortId: string;

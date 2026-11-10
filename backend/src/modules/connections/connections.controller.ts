@@ -13,6 +13,15 @@ router.get('/rack/:rackId', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/project/:projectId', async (req: Request, res: Response) => {
+  try {
+    const wirelist = await service.getProjectWireList(req.params.projectId);
+    res.json(wirelist);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.post('/', async (req: Request, res: Response) => {
   try {
     const connection = await service.createConnection(req.body);

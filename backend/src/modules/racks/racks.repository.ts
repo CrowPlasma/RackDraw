@@ -4,6 +4,35 @@ export class RacksRepository {
   async getByProjectId(projectId: string) {
     return prisma.rack.findMany({
       where: { projectId },
+      include: {
+        devices: {
+          include: {
+            ports: {
+              include: {
+                connectedSource: {
+                  include: {
+                    destPort: {
+                      include: {
+                        device: true,
+                      },
+                    },
+                  },
+                },
+                connectedDest: {
+                  include: {
+                    sourcePort: {
+                      include: {
+                        device: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { positionU: 'desc' },
+        },
+      },
       orderBy: { createdAt: 'asc' },
     });
   }

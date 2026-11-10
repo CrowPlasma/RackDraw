@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from "react-i18next";
-import { useRackStore, Device, Port } from '../../store/useRackStore';
+import { useRackStore, Device, Port, Rack } from '../../store/useRackStore';
 import { Trash2, Cable, GripVertical, Edit3, X, Save, Copy } from 'lucide-react';
 
 interface RackfaceGridProps {
+  rack?: Rack;
   onPortClick?: (port: Port, device: Device) => void;
   pendingSourcePort?: Port | null;
   selectedPort?: Port | null;
@@ -14,10 +15,10 @@ interface RackfaceGridProps {
 const ROW_HEIGHT = 64; // Height per U slot in pixels (increased from 48px to 64px)
 const CARD_GAP = 10;    // Margin gap between adjacent equipment cards (increased from 6px to 10px)
 
-export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedPort, isPrintCopy = false }: RackfaceGridProps) {
+export default function RackfaceGrid({ rack, onPortClick, pendingSourcePort, selectedPort, isPrintCopy = false }: RackfaceGridProps) {
   const { t } = useTranslation();
   const {
-    rackDetails,
+    rackDetails: storeRackDetails,
     activeDevice,
     setActiveDevice,
     deleteDevice,
@@ -25,7 +26,10 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
     wirelist,
     updateDevice,
     showToast,
+    isViewOnly,
   } = useRackStore();
+
+  const rackDetails = rack || storeRackDetails;
 
   const [showAddDeviceModal, setShowAddDeviceModal] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
@@ -35,6 +39,10 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
   const [dragOverSlot, setDragOverSlot] = useState<number | null>(null);
 
   const handleDragStart = (e: React.DragEvent, device: Device) => {
+    if (isViewOnly) {
+      e.preventDefault();
+      return;
+    }
     setDraggedDevice(device);
     e.dataTransfer.setData('text/plain', device.id);
     e.dataTransfer.effectAllowed = 'move';
@@ -222,6 +230,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
       }));
 
       await createDevice({
+        rackId: rackDetails.id,
         name: cloneName,
         brand: device.brand,
         model: device.model,
@@ -232,7 +241,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
         ports: portsToCreate
       });
       
-      showToast(`${t("toast.deviceCloned")}${targetU}.`, 'success');
+      showToast(`${t("app.toast.deviceCloned")}${targetU}.`, 'success');
     } catch (err: any) {
       // Store handles toast error
     }
@@ -327,6 +336,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
   };
 
   const handleOpenAddDevice = (slot: number) => {
+    if (isViewOnly) return;
     setSelectedSlot(slot);
     setDevName('');
     setDevBrand('');
@@ -397,6 +407,7 @@ export default function RackfaceGrid({ onPortClick, pendingSourcePort, selectedP
 
     try {
       await createDevice({
+        rackId: rackDetails.id,
         name: devName,
         brand: devBrand,
         model: devModel,
@@ -659,7 +670,7 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                   </span>
 
                   {/* Action buttons - shown when device is focused */}
-                  {isFocused && (
+                  {isFocused && !isViewOnly && (
                     <div style={{ display: 'flex', gap: '6px', marginTop: '6px' }}>
                       <button
                         onClick={(e) => {
@@ -761,7 +772,7 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                 }}
               >
                 <div 
-                  draggable={true}
+                  draggable={!isViewOnly}
                   onDragStart={(e) => handleDragStart(e, device)}
                   style={{
                     ...getDeviceStyle(device, isFocused),
@@ -771,20 +782,22 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                   }}
                 >
                   {/* Grip handle */}
-                  <div style={{
-                    position: 'absolute',
-                    left: '10px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    cursor: 'grab',
-                    color: 'var(--text-muted)',
-                    opacity: 0.6,
-                    display: 'flex',
-                    alignItems: 'center',
-                    zIndex: 8,
-                  }}>
-                    <GripVertical size={16} />
-                  </div>
+                  {!isViewOnly && (
+                    <div style={{
+                      position: 'absolute',
+                      left: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      cursor: 'grab',
+                      color: 'var(--text-muted)',
+                      opacity: 0.6,
+                      display: 'flex',
+                      alignItems: 'center',
+                      zIndex: 8,
+                    }}>
+                      <GripVertical size={16} />
+                    </div>
+                  )}
 
                   {/* Drive bays overlay lines for storage */}
                   {isStorage && (
@@ -918,7 +931,7 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                   </div>
 
                   {/* Absolutely positioned Delete Button on the far left */}
-                  {isFocused && (
+                  {isFocused && !isViewOnly && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -1022,7 +1035,7 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                   justifyContent: 'center',
                   color: isHighlightedDropZone ? 'var(--accent-neon-blue)' : 'var(--empty-slot-text)',
                   fontSize: '0.7rem',
-                  cursor: 'pointer',
+                  cursor: isViewOnly ? 'default' : 'pointer',
                   backgroundColor: isHighlightedDropZone ? 'rgba(56, 189, 248, 0.15)' : 'var(--empty-slot-bg)', 
                   border: isHighlightedDropZone ? '2px dashed var(--accent-neon-blue)' : '1px solid var(--empty-slot-border)',
                   boxShadow: isHighlightedDropZone ? 'var(--shadow-neon)' : 'none',
@@ -1030,19 +1043,23 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
                   userSelect: 'none',
                 }}
                 onMouseEnter={(e) => {
-                  if (isHighlightedDropZone) return;
+                  if (isHighlightedDropZone || isViewOnly) return;
                   e.currentTarget.style.color = 'var(--accent-neon-blue)';
                   e.currentTarget.style.backgroundColor = 'rgba(56, 189, 248, 0.05)';
                   e.currentTarget.style.border = '1px dashed rgba(56, 189, 248, 0.3)';
                 }}
                 onMouseLeave={(e) => {
-                  if (isHighlightedDropZone) return;
+                  if (isHighlightedDropZone || isViewOnly) return;
                   e.currentTarget.style.color = 'var(--empty-slot-text)';
                   e.currentTarget.style.backgroundColor = 'var(--empty-slot-bg)';
                   e.currentTarget.style.border = '1px solid var(--empty-slot-border)';
                 }}
               >
-                {isHighlightedDropZone ? '🎯 {t("rackface.dropToMove")}' : `+ {t("rackface.mountInU")}${u}`}
+                {isViewOnly
+                  ? `U${u}`
+                  : isHighlightedDropZone
+                    ? `🎯 ${t("rackface.dropToMove")}`
+                    : `+ ${t("rackface.mountInU")}${u}`}
               </div>
             </td>
           </tr>
@@ -1061,11 +1078,16 @@ ${isConnected ? `${t("rackface.route")}${conn?.sourcePort?.device?.name} (${conn
       width: '100%',
     }}>
       {/* Cabinet Visual Wrapper - Rendered via native table cells layout for perfect alignment */}
-      <table id={isPrintCopy ? "rack-table-print" : "rack-table"} style={{
-        borderCollapse: 'collapse',
-        width: '1080px',
-        maxWidth: '1080px',
-      }}>
+      <table
+        id={isPrintCopy ? `rack-table-print-${rackDetails.id}` : `rack-table-${rackDetails.id}`}
+        className={isPrintCopy ? "rack-table-print" : "rack-table-instance"}
+        data-rack-id={rackDetails.id}
+        style={{
+          borderCollapse: 'collapse',
+          width: '1080px',
+          maxWidth: '1080px',
+        }}
+      >
         <thead>
           <tr>
             {/* Empty top-left cell */}

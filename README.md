@@ -21,7 +21,9 @@ Whether you are managing a small MDF closet or a multi-rack datacenter, RackDraw
 ### ✨ Key Features
 
 - 🏗️ **Dynamic Visual Rack Builder** — Interactive drag-and-drop canvas to mount, move, and organize IT hardware inside customizable server cabinets. Not limited to standard heights; configure it for your specific infrastructure needs.
+- 🗄️ **Multi-Rack & Cross-Rack Patching** — View all cabinets in a project side-by-side on an expansive infinite canvas. Trace and route physical cables seamlessly between different server racks with inter-rack cabling channels.
 - 🔌 **Precise Port-to-Port Cabling** — Trace physical connections down to the specific interface. Differentiate media types natively: **Copper (CAT6/6a)**, **Fiber (Single-Mode / Multi-Mode)**, and **Power Lines**, each with distinct color-coding and routing logic.
+- 👁️ **View-Only Mode vs. Edit Mode** — Instantly lock the workspace into a read-only mode to prevent accidental hardware movement, slot deletions, or cable disconnects while inspecting on mobile devices or auditing in the field.
 - 📋 **Live WireList (Cable Inventory)** — Automatically generates a real-time cabling ledger ("WireList") as you visually connect devices. Easily filter, search, and audit patch cables.
 - 📄 **Technical Reports (PDF & CSV)** — Instantly generate print-ready PDF Technical Reports for field technicians, or export the full connection matrix to CSV/Excel for procurement and auditing.
 - 🏢 **Multi-Project Management** — Organize multiple sites, floors, or datacenters into distinct Projects, each containing multiple racks.
@@ -41,7 +43,7 @@ git clone https://github.com/CrowPlasma/RackDraw.git
 cd RackDraw
 
 # 2. Set up environment variables
-cp rackdraw-deploy/.env.example rackdraw-deploy/.env
+cp .env.example .env
 
 # 3. Spin up the stack
 docker compose up --build
@@ -68,7 +70,9 @@ Ya sea que gestiones un pequeño site de telecomunicaciones o un centro de datos
 ### ✨ Características Principales
 
 - 🏗️ **Constructor Visual de Racks** — Lienzo interactivo para montar, mover y organizar hardware IT dentro de los gabinetes. Se adapta a diferentes alturas y necesidades de infraestructura, no está limitado a estándares fijos.
+- 🗄️ **Vista Multi-Rack y Parcheo Inter-Rack** — Visualiza todos los gabinetes de un proyecto lado a lado en un lienzo infinito. Conecta y traza rutas de cableado físico entre diferentes racks de forma fluida con canales inter-rack dedicados.
 - 🔌 **Cableado Preciso Puerto-a-Puerto** — Traza conexiones físicas hasta la interfaz específica. Diferencia los medios físicos de forma nativa: **Cobre (CAT6/6a)**, **Fibra (Monomodo / Multimodo)** y **Líneas de Energía**, cada uno con su código de color y lógica de enrutamiento.
+- 👁️ **Modo Solo Lectura vs. Modo Edición** — Bloquea la interfaz en modo de solo vista con un solo clic para evitar movimientos accidentales de hardware, desmonte de slots o desconexión de cables durante auditorías en campo o revisiones en tablets.
 - 📋 **WireList en Vivo (Inventario de Cables)** — Genera automáticamente una bitácora de cableado en tiempo real a medida que conectas los dispositivos visualmente. Filtra, busca y audita cables fácilmente.
 - 📄 **Memorias Técnicas (PDF y CSV)** — Genera al instante Reportes Técnicos en PDF listos para impresión para los técnicos en campo, o exporta la matriz completa de conexiones a CSV/Excel.
 - 🏢 **Gestión Multi-Proyecto** — Organiza múltiples sitios, pisos o centros de datos en Proyectos separados, cada uno con múltiples racks.
@@ -88,7 +92,7 @@ git clone https://github.com/CrowPlasma/RackDraw.git
 cd RackDraw
 
 # 2. Configurar variables de entorno
-cp rackdraw-deploy/.env.example rackdraw-deploy/.env
+cp .env.example .env
 
 # 3. Levantar los contenedores
 docker compose up --build

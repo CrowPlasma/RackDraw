@@ -25,6 +25,7 @@ export interface Device {
   heightU: number;
   metadata?: any;
   ports: Port[];
+  rack?: Rack;
 }
 
 export interface Rack {
@@ -68,9 +69,16 @@ interface RackState {
   rackDetails: Rack | null;
   activeDevice: Device | null;
   wirelist: Connection[];
+  isMultiRackView: boolean;
+  isViewOnly: boolean;
   isLoading: boolean;
   error: string | null;
   toasts: Toast[];
+
+  // View & Mode actions
+  setMultiRackView: (enabled: boolean) => Promise<void>;
+  setViewOnly: (enabled: boolean) => void;
+  refreshWorkspaceData: () => Promise<void>;
 
   // Toast actions
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
@@ -90,6 +98,7 @@ interface RackState {
   updateRack: (rackId: string, name: string, heightU: number) => Promise<void>;
   deleteRack: (rackId: string) => Promise<void>;
   createDevice: (data: {
+    rackId?: string;
     name: string;
     brand: string;
     model: string;
@@ -136,6 +145,7 @@ interface RackState {
   }) => Promise<void>;
   deleteConnection: (connectionId: string) => Promise<void>;
   fetchWirelist: (rackId: string) => Promise<void>;
+  fetchProjectWirelist: (projectId: string) => Promise<void>;
 }
 
 export const useRackStore = create<RackState>((set, get) => ({
@@ -146,9 +156,55 @@ export const useRackStore = create<RackState>((set, get) => ({
   rackDetails: null,
   activeDevice: null,
   wirelist: [],
+  isMultiRackView: false,
+  isViewOnly: false,
   isLoading: false,
   error: null,
   toasts: [],
+
+  setMultiRackView: async (enabled: boolean) => {
+    set({ isMultiRackView: enabled, activeDevice: null });
+    await get().refreshWorkspaceData();
+  },
+
+  setViewOnly: (enabled: boolean) => {
+    set({ isViewOnly: enabled });
+  },
+
+  refreshWorkspaceData: async () => {
+    const { activeProject, activeRack, isMultiRackView } = get();
+    if (!activeProject) return;
+
+    set({ isLoading: true });
+    try {
+      const resRacks = await fetch(`${API_URL}/racks/project/${activeProject.id}`);
+      if (resRacks.ok) {
+        const racksData: Rack[] = await resRacks.json();
+        set({ racks: racksData });
+
+        if (isMultiRackView) {
+          await get().fetchProjectWirelist(activeProject.id);
+          if (activeRack) {
+            const updatedActive = racksData.find((r) => r.id === activeRack.id) || racksData[0] || null;
+            set({ activeRack: updatedActive, rackDetails: updatedActive });
+          } else if (racksData.length > 0) {
+            set({ activeRack: racksData[0], rackDetails: racksData[0] });
+          }
+        } else if (activeRack) {
+          const resDetails = await fetch(`${API_URL}/racks/${activeRack.id}`);
+          if (resDetails.ok) {
+            const dataDetails = await resDetails.json();
+            set({ rackDetails: dataDetails, activeRack: dataDetails });
+          }
+          await get().fetchWirelist(activeRack.id);
+        }
+      }
+    } catch (err: any) {
+      get().showToast(err.message, 'error');
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 
   showToast: (message, type = 'info') => {
     const id = Math.random().toString(36).substring(2, 9);
@@ -196,7 +252,12 @@ export const useRackStore = create<RackState>((set, get) => ({
       set({ racks: data, isLoading: false });
       
       if (data.length > 0) {
-        get().selectRack(data[0].id);
+        if (get().isMultiRackView) {
+          set({ activeRack: data[0], rackDetails: data[0] });
+          await get().fetchProjectWirelist(projectId);
+        } else {
+          await get().selectRack(data[0].id);
+        }
       }
     } catch (err: any) {
       set({ isLoading: false });
@@ -215,7 +276,11 @@ export const useRackStore = create<RackState>((set, get) => ({
         const dataDetails = await resDetails.json();
         set({ rackDetails: dataDetails });
         
-        await get().fetchWirelist(rackId);
+        if (get().isMultiRackView && get().activeProject) {
+          await get().fetchProjectWirelist(get().activeProject!.id);
+        } else {
+          await get().fetchWirelist(rackId);
+        }
       } catch (err: any) {
         get().showToast(err.message, 'error');
       } finally {
@@ -384,21 +449,21 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   createDevice: async (deviceData) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) throw new Error('Selecciona un rack primero.');
+    const targetRackId = deviceData.rackId || get().activeRack?.id;
+    if (!targetRackId) throw new Error('Selecciona un rack primero.');
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/devices`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...deviceData, rackId: activeRack.id }),
+        body: JSON.stringify({ ...deviceData, rackId: targetRackId }),
       });
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || 'Error al montar el dispositivo.');
       }
-      get().showToast(i18n.t("toast.deviceMounted"), 'success');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.deviceMounted"), 'success');
+      await get().refreshWorkspaceData();
     } catch (err: any) {
       set({ isLoading: false });
       get().showToast(err.message, 'error');
@@ -407,16 +472,17 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   deleteDevice: async (deviceId) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/devices/${deviceId}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Error al eliminar el dispositivo.');
-      get().showToast(i18n.t("toast.deviceRemoved"), 'info');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.deviceRemoved"), 'info');
+      if (get().activeDevice?.id === deviceId) {
+        set({ activeDevice: null });
+      }
+      await get().refreshWorkspaceData();
     } catch (err: any) {
       set({ isLoading: false });
       get().showToast(err.message, 'error');
@@ -425,8 +491,6 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   updateDevice: async (deviceId, deviceData) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/devices/${deviceId}`, {
@@ -438,13 +502,15 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al actualizar el dispositivo.');
       }
-      get().showToast(i18n.t("toast.deviceUpdated"), 'success');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.deviceUpdated"), 'success');
+      await get().refreshWorkspaceData();
 
       // Update the activeDevice state in store so the UI is refreshed
-      const currentRackDetails = get().rackDetails;
-      if (currentRackDetails && get().activeDevice?.id === deviceId) {
-        const updatedDev = currentRackDetails.devices?.find((d) => d.id === deviceId) || null;
+      const allDevs = get().isMultiRackView
+        ? get().racks.flatMap((r) => r.devices || [])
+        : (get().rackDetails?.devices || []);
+      if (get().activeDevice?.id === deviceId) {
+        const updatedDev = allDevs.find((d) => d.id === deviceId) || null;
         set({ activeDevice: updatedDev });
       }
     } catch (err: any) {
@@ -455,8 +521,6 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   addPort: async (deviceId, portData) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/devices/${deviceId}/ports`, {
@@ -468,13 +532,14 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al agregar el puerto.');
       }
-      get().showToast(i18n.t("toast.portAdded"), 'success');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.portAdded"), 'success');
+      await get().refreshWorkspaceData();
 
-      // Update the activeDevice state in store so the UI is refreshed
-      const currentRackDetails = get().rackDetails;
-      if (currentRackDetails && get().activeDevice) {
-        const updatedDev = currentRackDetails.devices?.find((d) => d.id === deviceId) || null;
+      const allDevs = get().isMultiRackView
+        ? get().racks.flatMap((r) => r.devices || [])
+        : (get().rackDetails?.devices || []);
+      if (get().activeDevice) {
+        const updatedDev = allDevs.find((d) => d.id === deviceId) || null;
         set({ activeDevice: updatedDev });
       }
     } catch (err: any) {
@@ -485,8 +550,6 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   deletePort: async (portId) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/devices/ports/${portId}`, {
@@ -496,15 +559,15 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al eliminar el puerto.');
       }
-      get().showToast(i18n.t("toast.portRemoved"), 'info');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.portRemoved"), 'info');
+      await get().refreshWorkspaceData();
 
-      // Update the activeDevice state in store so the UI is refreshed
-      const currentRackDetails = get().rackDetails;
+      const allDevs = get().isMultiRackView
+        ? get().racks.flatMap((r) => r.devices || [])
+        : (get().rackDetails?.devices || []);
       const activeDev = get().activeDevice;
-      if (currentRackDetails && activeDev) {
-        const deviceId = activeDev.id;
-        const updatedDev = currentRackDetails.devices?.find((d) => d.id === deviceId) || null;
+      if (activeDev) {
+        const updatedDev = allDevs.find((d) => d.id === activeDev.id) || null;
         set({ activeDevice: updatedDev });
       }
     } catch (err: any) {
@@ -525,9 +588,18 @@ export const useRackStore = create<RackState>((set, get) => ({
     }
   },
 
+  fetchProjectWirelist: async (projectId: string) => {
+    try {
+      const res = await fetch(`${API_URL}/connections/project/${projectId}`);
+      if (!res.ok) throw new Error('Error al cargar cableado del proyecto.');
+      const data = await res.json();
+      set({ wirelist: data });
+    } catch (err: any) {
+      console.error(err);
+    }
+  },
+
   createConnection: async (connData) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/connections`, {
@@ -539,8 +611,8 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al conectar los puertos.');
       }
-      get().showToast(i18n.t("toast.cableInstalled"), 'success');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.cableInstalled"), 'success');
+      await get().refreshWorkspaceData();
     } catch (err: any) {
       set({ isLoading: false });
       get().showToast(err.message, 'error');
@@ -549,8 +621,6 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   updateConnection: async (connectionId, connData) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/connections/${connectionId}`, {
@@ -562,8 +632,8 @@ export const useRackStore = create<RackState>((set, get) => ({
         const data = await res.json();
         throw new Error(data.error || 'Error al actualizar el cable.');
       }
-      get().showToast(i18n.t("toast.cableModified"), 'success');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.cableModified"), 'success');
+      await get().refreshWorkspaceData();
     } catch (err: any) {
       set({ isLoading: false });
       get().showToast(err.message, 'error');
@@ -572,16 +642,14 @@ export const useRackStore = create<RackState>((set, get) => ({
   },
 
   deleteConnection: async (connectionId) => {
-    const activeRack = get().activeRack;
-    if (!activeRack) return;
     set({ isLoading: true });
     try {
       const res = await fetch(`${API_URL}/connections/${connectionId}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Error al desconectar el cable.');
-      get().showToast(i18n.t("toast.cableDisconnected"), 'info');
-      await get().selectRack(activeRack.id);
+      get().showToast(i18n.t("app.toast.cableDisconnected"), 'info');
+      await get().refreshWorkspaceData();
     } catch (err: any) {
       set({ isLoading: false });
       get().showToast(err.message, 'error');

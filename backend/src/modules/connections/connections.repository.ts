@@ -23,12 +23,44 @@ export class ConnectionsRepository {
       include: {
         sourcePort: {
           include: {
-            device: true,
+            device: {
+              include: { rack: true },
+            },
           },
         },
         destPort: {
           include: {
-            device: true,
+            device: {
+              include: { rack: true },
+            },
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async getByProjectId(projectId: string) {
+    return prisma.connection.findMany({
+      where: {
+        OR: [
+          { sourcePort: { device: { rack: { projectId } } } },
+          { destPort: { device: { rack: { projectId } } } },
+        ],
+      },
+      include: {
+        sourcePort: {
+          include: {
+            device: {
+              include: { rack: true },
+            },
+          },
+        },
+        destPort: {
+          include: {
+            device: {
+              include: { rack: true },
+            },
           },
         },
       },
