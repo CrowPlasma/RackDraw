@@ -16,4 +16,4 @@ RUN npm run build
 EXPOSE 3000
 
 # En producción siempre aplicamos migraciones pendientes antes de levantar Node
-CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
+CMD ["sh", "-c", "(npx prisma migrate deploy || npx prisma db push --skip-generate) && npm start"]
