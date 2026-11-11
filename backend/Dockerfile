@@ -12,8 +12,9 @@ COPY . .
 # Generar cliente prisma y compilar typescript a JS
 RUN npx prisma generate
 RUN npm run build
+RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 3000
 
-# En producción siempre aplicamos migraciones pendientes antes de levantar Node
-CMD ["sh", "-c", "(npx prisma migrate deploy || npx prisma db push --skip-generate) && npm start"]
+# Script de arranque con reintentos para asegurar conexión y sincronización con PostgreSQL
+CMD ["./docker-entrypoint.sh"]
